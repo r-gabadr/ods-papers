@@ -1,0 +1,1929 @@
+{
+  "mode": "p02_benchmarks_v2",
+  "notes": [
+    "Los perfiles con checkpoint Genesis usan grid_shape 64x64 porque el checkpoint disponible tiene esa resolucion.",
+    "El AMR topologico se usa aqui como masking/observabilidad experimental; no implica todavia ahorro demostrado de VRAM.",
+    "Los gates P01 actuan como filtro: una separacion mejor no cuenta si rompe monotonias o estabilidad basica."
+  ],
+  "phase_channel_pairs": [
+    [
+      1,
+      4
+    ],
+    [
+      2,
+      5
+    ],
+    [
+      3,
+      6
+    ]
+  ],
+  "target_drive_rms": 0.012,
+  "amr_quantile": 0.9,
+  "amr_dilation_radius": 1,
+  "profiles": [
+    {
+      "name": "noise_64_seed7_spectral_96",
+      "kwargs": {
+        "steps": 96,
+        "grid_shape": [
+          64,
+          64
+        ],
+        "seed": 7,
+        "spatial_mode": "spectral",
+        "init_source": "noise"
+      },
+      "run_summary_path": "artifacts/p02_benchmarks_v2/noise_64_seed7_spectral_96/summary.json",
+      "p01_gates": {
+        "all_pass": true,
+        "gates": {
+          "tau_free_energy": {
+            "pass": true,
+            "before": -869.4716186523438,
+            "after": -976.4362182617188,
+            "delta": -106.964599609375
+          },
+          "reversible_transport": {
+            "pass": true,
+            "dE_dt": 0.0
+          },
+          "spatial_smoothing": {
+            "pass": true,
+            "before_var": 1.0,
+            "after_var": 0.5531221032142639,
+            "d_eff": 1.0
+          }
+        }
+      },
+      "separation": {
+        "structured_vortex_step_gap": 0.0,
+        "baseline_vortex_step_gap": 0.0,
+        "structured_complexity_gap": 0.18826296428839484,
+        "baseline_complexity_gap": 0.11282138029734234,
+        "structured_rotational_active_gap": -0.00244140625,
+        "baseline_rotational_active_gap": -0.00390625,
+        "structured_recommended_phase_channels": [
+          3,
+          6
+        ],
+        "baseline_recommended_phase_channels": [
+          3,
+          6
+        ]
+      },
+      "cases": [
+        {
+          "name": "thomas_baseline",
+          "regime": "thomas",
+          "transport_enabled": false,
+          "tau_enabled": false,
+          "summary_path": "artifacts/p02_benchmarks_v2/noise_64_seed7_spectral_96/thomas_baseline/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.013035758398473263,
+            "vector_energy": 0.010293368250131607,
+            "bivector_energy": 0.013092190027236938,
+            "pseudoscalar_energy": 0.013298004865646362,
+            "alignment": 0.023313313722610474,
+            "entropy": 2.072695732116699,
+            "d_eff": 7.9462151527404785,
+            "rms": 0.10982401669025421
+          },
+          "final_free_energy": -566.8013305664062,
+          "solitons": {
+            "count": 10,
+            "blob_count": 4,
+            "vortex_count": 6,
+            "mean_complexity": 6.952244758605957,
+            "max_complexity": 15.509834289550781,
+            "mean_energy": 0.3408634066581726
+          },
+          "soliton_tracks": {
+            "track_count": 13,
+            "blob_tracks": 4,
+            "vortex_tracks": 9,
+            "mean_persistence": 73.84615384615384,
+            "max_persistence": 96,
+            "active_last": 10,
+            "mean_track_complexity": 10.930228233337402,
+            "max_track_complexity": 20.281408309936523
+          },
+          "recommended_phase_channels": [
+            3,
+            6
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.41455078125,
+            "energy_active_ratio": 0.355712890625,
+            "rotational_peak": 1.4102944135665894,
+            "energy_peak": 0.47296297550201416
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 1.0,
+            "mean_frame_complexity": 8.211497977375984
+          }
+        },
+        {
+          "name": "thomas_structured",
+          "regime": "thomas",
+          "transport_enabled": true,
+          "tau_enabled": true,
+          "summary_path": "artifacts/p02_benchmarks_v2/noise_64_seed7_spectral_96/thomas_structured/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.012791862711310387,
+            "vector_energy": 0.009945876896381378,
+            "bivector_energy": 0.012333015911281109,
+            "pseudoscalar_energy": 0.013069851323962212,
+            "alignment": 0.02102687768638134,
+            "entropy": 2.0730011463165283,
+            "d_eff": 7.948642253875732,
+            "rms": 0.10764437168836594
+          },
+          "final_free_energy": -604.5302124023438,
+          "solitons": {
+            "count": 10,
+            "blob_count": 5,
+            "vortex_count": 5,
+            "mean_complexity": 6.34236478805542,
+            "max_complexity": 13.230301856994629,
+            "mean_energy": 0.3271791338920593
+          },
+          "soliton_tracks": {
+            "track_count": 14,
+            "blob_tracks": 5,
+            "vortex_tracks": 9,
+            "mean_persistence": 68.57142857142857,
+            "max_persistence": 96,
+            "active_last": 10,
+            "mean_track_complexity": 11.863594055175781,
+            "max_track_complexity": 23.575639724731445
+          },
+          "recommended_phase_channels": [
+            3,
+            6
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.40771484375,
+            "energy_active_ratio": 0.355224609375,
+            "rotational_peak": 1.3835481405258179,
+            "energy_peak": 0.4671156108379364
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 1.0,
+            "mean_frame_complexity": 8.177134508887926
+          }
+        },
+        {
+          "name": "spinor8d_baseline",
+          "regime": "spinor8d",
+          "transport_enabled": false,
+          "tau_enabled": false,
+          "summary_path": "artifacts/p02_benchmarks_v2/noise_64_seed7_spectral_96/spinor8d_baseline/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.013034431263804436,
+            "vector_energy": 0.010306154377758503,
+            "bivector_energy": 0.013112622313201427,
+            "pseudoscalar_energy": 0.013339145109057426,
+            "alignment": 0.02328404411673546,
+            "entropy": 2.072658061981201,
+            "d_eff": 7.945915699005127,
+            "rms": 0.10990335792303085
+          },
+          "final_free_energy": -566.7813110351562,
+          "solitons": {
+            "count": 10,
+            "blob_count": 6,
+            "vortex_count": 4,
+            "mean_complexity": 7.426859378814697,
+            "max_complexity": 17.064594268798828,
+            "mean_energy": 0.34175625443458557
+          },
+          "soliton_tracks": {
+            "track_count": 12,
+            "blob_tracks": 4,
+            "vortex_tracks": 8,
+            "mean_persistence": 80.0,
+            "max_persistence": 96,
+            "active_last": 10,
+            "mean_track_complexity": 11.397933006286621,
+            "max_track_complexity": 21.092529296875
+          },
+          "recommended_phase_channels": [
+            3,
+            6
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.41064453125,
+            "energy_active_ratio": 0.357421875,
+            "rotational_peak": 1.3879176378250122,
+            "energy_peak": 0.4697919487953186
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 1.0,
+            "mean_frame_complexity": 8.324319357673327
+          }
+        },
+        {
+          "name": "spinor8d_structured",
+          "regime": "spinor8d",
+          "transport_enabled": true,
+          "tau_enabled": true,
+          "summary_path": "artifacts/p02_benchmarks_v2/noise_64_seed7_spectral_96/spinor8d_structured/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.012791180983185768,
+            "vector_energy": 0.009960029274225235,
+            "bivector_energy": 0.012349422089755535,
+            "pseudoscalar_energy": 0.013109991326928139,
+            "alignment": 0.02099107950925827,
+            "entropy": 2.0729684829711914,
+            "d_eff": 7.94838285446167,
+            "rms": 0.10772047191858292
+          },
+          "final_free_energy": -604.4512939453125,
+          "solitons": {
+            "count": 10,
+            "blob_count": 5,
+            "vortex_count": 5,
+            "mean_complexity": 6.299023151397705,
+            "max_complexity": 13.230295181274414,
+            "mean_energy": 0.32741087675094604
+          },
+          "soliton_tracks": {
+            "track_count": 13,
+            "blob_tracks": 3,
+            "vortex_tracks": 10,
+            "mean_persistence": 73.84615384615384,
+            "max_persistence": 96,
+            "active_last": 10,
+            "mean_track_complexity": 11.863591194152832,
+            "max_track_complexity": 22.746822357177734
+          },
+          "recommended_phase_channels": [
+            3,
+            6
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.4052734375,
+            "energy_active_ratio": 0.35546875,
+            "rotational_peak": 1.3946717977523804,
+            "energy_peak": 0.4637520909309387
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 1.0,
+            "mean_frame_complexity": 8.365397473176321
+          }
+        }
+      ]
+    },
+    {
+      "name": "noise_64_seed17_spectral_96",
+      "kwargs": {
+        "steps": 96,
+        "grid_shape": [
+          64,
+          64
+        ],
+        "seed": 17,
+        "spatial_mode": "spectral",
+        "init_source": "noise"
+      },
+      "run_summary_path": "artifacts/p02_benchmarks_v2/noise_64_seed17_spectral_96/summary.json",
+      "p01_gates": {
+        "all_pass": true,
+        "gates": {
+          "tau_free_energy": {
+            "pass": true,
+            "before": -872.6216430664062,
+            "after": -978.0574951171875,
+            "delta": -105.43585205078125
+          },
+          "reversible_transport": {
+            "pass": true,
+            "dE_dt": 0.0
+          },
+          "spatial_smoothing": {
+            "pass": true,
+            "before_var": 1.0,
+            "after_var": 0.5531221032142639,
+            "d_eff": 1.0
+          }
+        }
+      },
+      "separation": {
+        "structured_vortex_step_gap": 0.0,
+        "baseline_vortex_step_gap": 0.0,
+        "structured_complexity_gap": 0.17691397666931152,
+        "baseline_complexity_gap": 0.04518668850263019,
+        "structured_rotational_active_gap": 0.0,
+        "baseline_rotational_active_gap": -0.002197265625,
+        "structured_recommended_phase_channels": [
+          1,
+          4
+        ],
+        "baseline_recommended_phase_channels": [
+          1,
+          4
+        ]
+      },
+      "cases": [
+        {
+          "name": "thomas_baseline",
+          "regime": "thomas",
+          "transport_enabled": false,
+          "tau_enabled": false,
+          "summary_path": "artifacts/p02_benchmarks_v2/noise_64_seed17_spectral_96/thomas_baseline/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.012914680875837803,
+            "vector_energy": 0.010396316647529602,
+            "bivector_energy": 0.012915244325995445,
+            "pseudoscalar_energy": 0.012937257066369057,
+            "alignment": 0.02304348349571228,
+            "entropy": 2.074064016342163,
+            "d_eff": 7.957095146179199,
+            "rms": 0.10942274332046509
+          },
+          "final_free_energy": -572.460205078125,
+          "solitons": {
+            "count": 10,
+            "blob_count": 2,
+            "vortex_count": 8,
+            "mean_complexity": 9.347691535949707,
+            "max_complexity": 17.051607131958008,
+            "mean_energy": 0.31354886293411255
+          },
+          "soliton_tracks": {
+            "track_count": 15,
+            "blob_tracks": 5,
+            "vortex_tracks": 10,
+            "mean_persistence": 64.0,
+            "max_persistence": 96,
+            "active_last": 10,
+            "mean_track_complexity": 12.630997657775879,
+            "max_track_complexity": 23.52927589416504
+          },
+          "recommended_phase_channels": [
+            1,
+            4
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.414794921875,
+            "energy_active_ratio": 0.3671875,
+            "rotational_peak": 1.3947560787200928,
+            "energy_peak": 0.38101738691329956
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 1.0,
+            "mean_frame_complexity": 10.584726393222809
+          }
+        },
+        {
+          "name": "thomas_structured",
+          "regime": "thomas",
+          "transport_enabled": true,
+          "tau_enabled": true,
+          "summary_path": "artifacts/p02_benchmarks_v2/noise_64_seed17_spectral_96/thomas_structured/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.012691641226410866,
+            "vector_energy": 0.010061976499855518,
+            "bivector_energy": 0.012149473652243614,
+            "pseudoscalar_energy": 0.01271845679730177,
+            "alignment": 0.02085096947848797,
+            "entropy": 2.074416160583496,
+            "d_eff": 7.959897994995117,
+            "rms": 0.10726399719715118
+          },
+          "final_free_energy": -610.3804321289062,
+          "solitons": {
+            "count": 10,
+            "blob_count": 3,
+            "vortex_count": 7,
+            "mean_complexity": 9.232316970825195,
+            "max_complexity": 15.498560905456543,
+            "mean_energy": 0.3018273711204529
+          },
+          "soliton_tracks": {
+            "track_count": 17,
+            "blob_tracks": 5,
+            "vortex_tracks": 12,
+            "mean_persistence": 56.470588235294116,
+            "max_persistence": 96,
+            "active_last": 10,
+            "mean_track_complexity": 12.681955337524414,
+            "max_track_complexity": 21.89760398864746
+          },
+          "recommended_phase_channels": [
+            1,
+            4
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.409423828125,
+            "energy_active_ratio": 0.365478515625,
+            "rotational_peak": 1.4076018333435059,
+            "energy_peak": 0.3624538481235504
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 1.0,
+            "mean_frame_complexity": 10.381598671277365
+          }
+        },
+        {
+          "name": "spinor8d_baseline",
+          "regime": "spinor8d",
+          "transport_enabled": false,
+          "tau_enabled": false,
+          "summary_path": "artifacts/p02_benchmarks_v2/noise_64_seed17_spectral_96/spinor8d_baseline/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.012879632413387299,
+            "vector_energy": 0.010402776300907135,
+            "bivector_energy": 0.012914329767227173,
+            "pseudoscalar_energy": 0.012977465987205505,
+            "alignment": 0.02297396771609783,
+            "entropy": 2.074040174484253,
+            "d_eff": 7.956905364990234,
+            "rms": 0.10943519324064255
+          },
+          "final_free_energy": -572.6115112304688,
+          "solitons": {
+            "count": 10,
+            "blob_count": 2,
+            "vortex_count": 8,
+            "mean_complexity": 10.88737678527832,
+            "max_complexity": 21.060808181762695,
+            "mean_energy": 0.3131120204925537
+          },
+          "soliton_tracks": {
+            "track_count": 15,
+            "blob_tracks": 6,
+            "vortex_tracks": 9,
+            "mean_persistence": 64.0,
+            "max_persistence": 96,
+            "active_last": 10,
+            "mean_track_complexity": 12.768298149108887,
+            "max_track_complexity": 21.890918731689453
+          },
+          "recommended_phase_channels": [
+            1,
+            4
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.41259765625,
+            "energy_active_ratio": 0.36865234375,
+            "rotational_peak": 1.403522253036499,
+            "energy_peak": 0.3732863664627075
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 1.0,
+            "mean_frame_complexity": 10.629913081725439
+          }
+        },
+        {
+          "name": "spinor8d_structured",
+          "regime": "spinor8d",
+          "transport_enabled": true,
+          "tau_enabled": true,
+          "summary_path": "artifacts/p02_benchmarks_v2/noise_64_seed17_spectral_96/spinor8d_structured/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.01265517808496952,
+            "vector_energy": 0.010071475990116596,
+            "bivector_energy": 0.012146095745265484,
+            "pseudoscalar_energy": 0.012756455689668655,
+            "alignment": 0.02078302390873432,
+            "entropy": 2.074413776397705,
+            "d_eff": 7.959878921508789,
+            "rms": 0.1072755977511406
+          },
+          "final_free_energy": -610.464111328125,
+          "solitons": {
+            "count": 10,
+            "blob_count": 2,
+            "vortex_count": 8,
+            "mean_complexity": 9.533990859985352,
+            "max_complexity": 14.746267318725586,
+            "mean_energy": 0.3014948070049286
+          },
+          "soliton_tracks": {
+            "track_count": 17,
+            "blob_tracks": 5,
+            "vortex_tracks": 12,
+            "mean_persistence": 56.470588235294116,
+            "max_persistence": 96,
+            "active_last": 10,
+            "mean_track_complexity": 12.670964241027832,
+            "max_track_complexity": 21.082996368408203
+          },
+          "recommended_phase_channels": [
+            1,
+            4
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.409423828125,
+            "energy_active_ratio": 0.3681640625,
+            "rotational_peak": 1.4026299715042114,
+            "energy_peak": 0.35866397619247437
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 1.0,
+            "mean_frame_complexity": 10.558512647946676
+          }
+        }
+      ]
+    },
+    {
+      "name": "noise_96_seed7_spectral_192",
+      "kwargs": {
+        "steps": 192,
+        "grid_shape": [
+          96,
+          96
+        ],
+        "seed": 7,
+        "spatial_mode": "spectral",
+        "init_source": "noise"
+      },
+      "run_summary_path": "artifacts/p02_benchmarks_v2/noise_96_seed7_spectral_192/summary.json",
+      "p01_gates": {
+        "all_pass": true,
+        "gates": {
+          "tau_free_energy": {
+            "pass": true,
+            "before": -1958.343505859375,
+            "after": -2198.4111328125,
+            "delta": -240.067626953125
+          },
+          "reversible_transport": {
+            "pass": true,
+            "dE_dt": 0.0
+          },
+          "spatial_smoothing": {
+            "pass": true,
+            "before_var": 1.0,
+            "after_var": 0.5531221032142639,
+            "d_eff": 1.0
+          }
+        }
+      },
+      "separation": {
+        "structured_vortex_step_gap": 0.0,
+        "baseline_vortex_step_gap": 0.0,
+        "structured_complexity_gap": 0.14545785635709763,
+        "baseline_complexity_gap": 0.26352909207344055,
+        "structured_rotational_active_gap": -0.00390625,
+        "baseline_rotational_active_gap": 0.00010851025581359863,
+        "structured_recommended_phase_channels": [
+          1,
+          4
+        ],
+        "baseline_recommended_phase_channels": [
+          1,
+          4
+        ]
+      },
+      "cases": [
+        {
+          "name": "thomas_baseline",
+          "regime": "thomas",
+          "transport_enabled": false,
+          "tau_enabled": false,
+          "summary_path": "artifacts/p02_benchmarks_v2/noise_96_seed7_spectral_192/thomas_baseline/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.00840847846120596,
+            "vector_energy": 0.005848834756761789,
+            "bivector_energy": 0.009112711064517498,
+            "pseudoscalar_energy": 0.009014986455440521,
+            "alignment": 0.014789232984185219,
+            "entropy": 2.0597004890441895,
+            "d_eff": 7.843620300292969,
+            "rms": 0.08825261145830154
+          },
+          "final_free_energy": -1311.2412109375,
+          "solitons": {
+            "count": 10,
+            "blob_count": 6,
+            "vortex_count": 4,
+            "mean_complexity": 4.930370807647705,
+            "max_complexity": 8.80276107788086,
+            "mean_energy": 0.23807914555072784
+          },
+          "soliton_tracks": {
+            "track_count": 18,
+            "blob_tracks": 9,
+            "vortex_tracks": 9,
+            "mean_persistence": 106.66666666666667,
+            "max_persistence": 192,
+            "active_last": 10,
+            "mean_track_complexity": 8.859237670898438,
+            "max_track_complexity": 22.743915557861328
+          },
+          "recommended_phase_channels": [
+            2,
+            5
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.4086371660232544,
+            "energy_active_ratio": 0.3602430522441864,
+            "rotational_peak": 1.4102963209152222,
+            "energy_peak": 0.2781708538532257
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 1.0,
+            "mean_frame_complexity": 5.378016963601112
+          }
+        },
+        {
+          "name": "thomas_structured",
+          "regime": "thomas",
+          "transport_enabled": true,
+          "tau_enabled": true,
+          "summary_path": "artifacts/p02_benchmarks_v2/noise_96_seed7_spectral_192/thomas_structured/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.008041447959840298,
+            "vector_energy": 0.00575273809954524,
+            "bivector_energy": 0.007913258858025074,
+            "pseudoscalar_energy": 0.008600154891610146,
+            "alignment": 0.011889164336025715,
+            "entropy": 2.0664725303649902,
+            "d_eff": 7.896917819976807,
+            "rms": 0.08488203585147858
+          },
+          "final_free_energy": -1475.341064453125,
+          "solitons": {
+            "count": 10,
+            "blob_count": 5,
+            "vortex_count": 5,
+            "mean_complexity": 5.326932430267334,
+            "max_complexity": 9.823070526123047,
+            "mean_energy": 0.2215699702501297
+          },
+          "soliton_tracks": {
+            "track_count": 19,
+            "blob_tracks": 9,
+            "vortex_tracks": 10,
+            "mean_persistence": 101.05263157894737,
+            "max_persistence": 192,
+            "active_last": 10,
+            "mean_track_complexity": 9.528033256530762,
+            "max_track_complexity": 23.802391052246094
+          },
+          "recommended_phase_channels": [
+            2,
+            5
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.4096137285232544,
+            "energy_active_ratio": 0.3581814169883728,
+            "rotational_peak": 1.3993124961853027,
+            "energy_peak": 0.27704939246177673
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 1.0,
+            "mean_frame_complexity": 5.563969478011131
+          }
+        },
+        {
+          "name": "spinor8d_baseline",
+          "regime": "spinor8d",
+          "transport_enabled": false,
+          "tau_enabled": false,
+          "summary_path": "artifacts/p02_benchmarks_v2/noise_96_seed7_spectral_192/spinor8d_baseline/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.00848027877509594,
+            "vector_energy": 0.005994357634335756,
+            "bivector_energy": 0.009049681946635246,
+            "pseudoscalar_energy": 0.008954310789704323,
+            "alignment": 0.014365419745445251,
+            "entropy": 2.062122106552124,
+            "d_eff": 7.862637519836426,
+            "rms": 0.08843556046485901
+          },
+          "final_free_energy": -1312.8427734375,
+          "solitons": {
+            "count": 10,
+            "blob_count": 9,
+            "vortex_count": 1,
+            "mean_complexity": 3.9641425609588623,
+            "max_complexity": 7.528241157531738,
+            "mean_energy": 0.24061350524425507
+          },
+          "soliton_tracks": {
+            "track_count": 19,
+            "blob_tracks": 9,
+            "vortex_tracks": 10,
+            "mean_persistence": 101.05263157894737,
+            "max_persistence": 192,
+            "active_last": 10,
+            "mean_track_complexity": 8.241847038269043,
+            "max_track_complexity": 14.749039649963379
+          },
+          "recommended_phase_channels": [
+            1,
+            4
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.408745676279068,
+            "energy_active_ratio": 0.3566623330116272,
+            "rotational_peak": 1.4067997932434082,
+            "energy_peak": 0.2962857484817505
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 1.0,
+            "mean_frame_complexity": 5.641546055674553
+          }
+        },
+        {
+          "name": "spinor8d_structured",
+          "regime": "spinor8d",
+          "transport_enabled": true,
+          "tau_enabled": true,
+          "summary_path": "artifacts/p02_benchmarks_v2/noise_96_seed7_spectral_192/spinor8d_structured/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.008110079914331436,
+            "vector_energy": 0.00594769511371851,
+            "bivector_energy": 0.007823375053703785,
+            "pseudoscalar_energy": 0.008544928394258022,
+            "alignment": 0.011532680131494999,
+            "entropy": 2.069035053253174,
+            "d_eff": 7.917179584503174,
+            "rms": 0.08512365818023682
+          },
+          "final_free_energy": -1478.4771728515625,
+          "solitons": {
+            "count": 10,
+            "blob_count": 9,
+            "vortex_count": 1,
+            "mean_complexity": 4.877410888671875,
+            "max_complexity": 17.030405044555664,
+            "mean_energy": 0.22234687209129333
+          },
+          "soliton_tracks": {
+            "track_count": 22,
+            "blob_tracks": 10,
+            "vortex_tracks": 12,
+            "mean_persistence": 87.27272727272727,
+            "max_persistence": 192,
+            "active_last": 10,
+            "mean_track_complexity": 8.952442169189453,
+            "max_track_complexity": 19.407533645629883
+          },
+          "recommended_phase_channels": [
+            1,
+            4
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.4057074785232544,
+            "energy_active_ratio": 0.3581814169883728,
+            "rotational_peak": 1.4033809900283813,
+            "energy_peak": 0.26919907331466675
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 1.0,
+            "mean_frame_complexity": 5.709427334368229
+          }
+        }
+      ]
+    },
+    {
+      "name": "noise_64_seed7_laplacian_96",
+      "kwargs": {
+        "steps": 96,
+        "grid_shape": [
+          64,
+          64
+        ],
+        "seed": 7,
+        "spatial_mode": "laplacian",
+        "init_source": "noise"
+      },
+      "run_summary_path": "artifacts/p02_benchmarks_v2/noise_64_seed7_laplacian_96/summary.json",
+      "p01_gates": {
+        "all_pass": true,
+        "gates": {
+          "tau_free_energy": {
+            "pass": true,
+            "before": -869.4716186523438,
+            "after": -976.4362182617188,
+            "delta": -106.964599609375
+          },
+          "reversible_transport": {
+            "pass": true,
+            "dE_dt": 0.0
+          },
+          "spatial_smoothing": {
+            "pass": true,
+            "before_var": 1.0,
+            "after_var": 0.7743998765945435,
+            "d_eff": 1.0
+          }
+        }
+      },
+      "separation": {
+        "structured_vortex_step_gap": 0.0,
+        "baseline_vortex_step_gap": 0.0,
+        "structured_complexity_gap": 0.04232188562552075,
+        "baseline_complexity_gap": 0.07722757756710052,
+        "structured_rotational_active_gap": 0.005126953125,
+        "baseline_rotational_active_gap": -0.00439453125,
+        "structured_recommended_phase_channels": [
+          3,
+          6
+        ],
+        "baseline_recommended_phase_channels": [
+          3,
+          6
+        ]
+      },
+      "cases": [
+        {
+          "name": "thomas_baseline",
+          "regime": "thomas",
+          "transport_enabled": false,
+          "tau_enabled": false,
+          "summary_path": "artifacts/p02_benchmarks_v2/noise_64_seed7_laplacian_96/thomas_baseline/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.015702348202466965,
+            "vector_energy": 0.012445494532585144,
+            "bivector_energy": 0.015837520360946655,
+            "pseudoscalar_energy": 0.016058534383773804,
+            "alignment": 0.028243955224752426,
+            "entropy": 2.072737693786621,
+            "d_eff": 7.946548938751221,
+            "rms": 0.1207321435213089
+          },
+          "final_free_energy": -557.0208129882812,
+          "solitons": {
+            "count": 10,
+            "blob_count": 4,
+            "vortex_count": 6,
+            "mean_complexity": 6.559298038482666,
+            "max_complexity": 12.48360824584961,
+            "mean_energy": 0.40707334876060486
+          },
+          "soliton_tracks": {
+            "track_count": 13,
+            "blob_tracks": 4,
+            "vortex_tracks": 9,
+            "mean_persistence": 73.84615384615384,
+            "max_persistence": 96,
+            "active_last": 10,
+            "mean_track_complexity": 10.811970710754395,
+            "max_track_complexity": 21.921812057495117
+          },
+          "recommended_phase_channels": [
+            3,
+            6
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.41552734375,
+            "energy_active_ratio": 0.353759765625,
+            "rotational_peak": 1.4062268733978271,
+            "energy_peak": 0.5720608234405518
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 1.0,
+            "mean_frame_complexity": 8.807953546444574
+          }
+        },
+        {
+          "name": "thomas_structured",
+          "regime": "thomas",
+          "transport_enabled": true,
+          "tau_enabled": true,
+          "summary_path": "artifacts/p02_benchmarks_v2/noise_64_seed7_laplacian_96/thomas_structured/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.015411855652928352,
+            "vector_energy": 0.011994466185569763,
+            "bivector_energy": 0.014913169667124748,
+            "pseudoscalar_energy": 0.015773147344589233,
+            "alignment": 0.02542860433459282,
+            "entropy": 2.072946071624756,
+            "d_eff": 7.948204517364502,
+            "rms": 0.11827298998832703
+          },
+          "final_free_energy": -593.0011596679688,
+          "solitons": {
+            "count": 10,
+            "blob_count": 4,
+            "vortex_count": 6,
+            "mean_complexity": 7.979295253753662,
+            "max_complexity": 17.088268280029297,
+            "mean_energy": 0.389517217874527
+          },
+          "soliton_tracks": {
+            "track_count": 12,
+            "blob_tracks": 4,
+            "vortex_tracks": 8,
+            "mean_persistence": 80.0,
+            "max_persistence": 96,
+            "active_last": 10,
+            "mean_track_complexity": 11.425357818603516,
+            "max_track_complexity": 22.746143341064453
+          },
+          "recommended_phase_channels": [
+            3,
+            6
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.40478515625,
+            "energy_active_ratio": 0.353271484375,
+            "rotational_peak": 1.4044318199157715,
+            "energy_peak": 0.5637809038162231
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 1.0,
+            "mean_frame_complexity": 8.916642849644026
+          }
+        },
+        {
+          "name": "spinor8d_baseline",
+          "regime": "spinor8d",
+          "transport_enabled": false,
+          "tau_enabled": false,
+          "summary_path": "artifacts/p02_benchmarks_v2/noise_64_seed7_laplacian_96/spinor8d_baseline/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.015701021999120712,
+            "vector_energy": 0.012458279728889465,
+            "bivector_energy": 0.01585795357823372,
+            "pseudoscalar_energy": 0.01609966903924942,
+            "alignment": 0.02821468375623226,
+            "entropy": 2.0727035999298096,
+            "d_eff": 7.946277618408203,
+            "rms": 0.1208043172955513
+          },
+          "final_free_energy": -556.9822998046875,
+          "solitons": {
+            "count": 10,
+            "blob_count": 4,
+            "vortex_count": 6,
+            "mean_complexity": 7.9283552169799805,
+            "max_complexity": 18.671401977539062,
+            "mean_energy": 0.4078039228916168
+          },
+          "soliton_tracks": {
+            "track_count": 12,
+            "blob_tracks": 3,
+            "vortex_tracks": 9,
+            "mean_persistence": 80.0,
+            "max_persistence": 96,
+            "active_last": 10,
+            "mean_track_complexity": 11.585665702819824,
+            "max_track_complexity": 21.92119026184082
+          },
+          "recommended_phase_channels": [
+            3,
+            6
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.4111328125,
+            "energy_active_ratio": 0.356689453125,
+            "rotational_peak": 1.3955007791519165,
+            "energy_peak": 0.5775863528251648
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 1.0,
+            "mean_frame_complexity": 8.885181124011675
+          }
+        },
+        {
+          "name": "spinor8d_structured",
+          "regime": "spinor8d",
+          "transport_enabled": true,
+          "tau_enabled": true,
+          "summary_path": "artifacts/p02_benchmarks_v2/noise_64_seed7_laplacian_96/spinor8d_structured/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.015411518514156342,
+            "vector_energy": 0.01200852356851101,
+            "bivector_energy": 0.01492955069988966,
+            "pseudoscalar_energy": 0.01581346057355404,
+            "alignment": 0.0253930501639843,
+            "entropy": 2.0729153156280518,
+            "d_eff": 7.947959899902344,
+            "rms": 0.1183423399925232
+          },
+          "final_free_energy": -592.960693359375,
+          "solitons": {
+            "count": 10,
+            "blob_count": 3,
+            "vortex_count": 7,
+            "mean_complexity": 8.233564376831055,
+            "max_complexity": 18.67164421081543,
+            "mean_energy": 0.3903692364692688
+          },
+          "soliton_tracks": {
+            "track_count": 12,
+            "blob_tracks": 4,
+            "vortex_tracks": 8,
+            "mean_persistence": 80.0,
+            "max_persistence": 96,
+            "active_last": 10,
+            "mean_track_complexity": 11.347846031188965,
+            "max_track_complexity": 21.92262077331543
+          },
+          "recommended_phase_channels": [
+            3,
+            6
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.409912109375,
+            "energy_active_ratio": 0.3544921875,
+            "rotational_peak": 1.4001872539520264,
+            "energy_peak": 0.560141384601593
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 1.0,
+            "mean_frame_complexity": 8.958964735269547
+          }
+        }
+      ]
+    },
+    {
+      "name": "genesis_amplitude_64_seed7_spectral_96",
+      "kwargs": {
+        "steps": 96,
+        "grid_shape": [
+          64,
+          64
+        ],
+        "seed": 7,
+        "spatial_mode": "spectral",
+        "init_source": "genesis_checkpoint",
+        "genesis_projection_mode": "amplitude"
+      },
+      "run_summary_path": "artifacts/p02_benchmarks_v2/genesis_amplitude_64_seed7_spectral_96/summary.json",
+      "p01_gates": {
+        "all_pass": true,
+        "gates": {
+          "tau_free_energy": {
+            "pass": true,
+            "before": -869.4716186523438,
+            "after": -976.4362182617188,
+            "delta": -106.964599609375
+          },
+          "reversible_transport": {
+            "pass": true,
+            "dE_dt": 0.0
+          },
+          "spatial_smoothing": {
+            "pass": true,
+            "before_var": 1.0,
+            "after_var": 0.5531221032142639,
+            "d_eff": 1.0
+          }
+        }
+      },
+      "separation": {
+        "structured_vortex_step_gap": 0.0,
+        "baseline_vortex_step_gap": 0.0,
+        "structured_complexity_gap": 0.0060342450936632375,
+        "baseline_complexity_gap": 0.0057537853717803955,
+        "structured_rotational_active_gap": -0.001708984375,
+        "baseline_rotational_active_gap": 0.0009765625,
+        "structured_recommended_phase_channels": [
+          1,
+          4
+        ],
+        "baseline_recommended_phase_channels": [
+          1,
+          4
+        ]
+      },
+      "cases": [
+        {
+          "name": "thomas_baseline",
+          "regime": "thomas",
+          "transport_enabled": false,
+          "tau_enabled": false,
+          "summary_path": "artifacts/p02_benchmarks_v2/genesis_amplitude_64_seed7_spectral_96/thomas_baseline/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.1142711490392685,
+            "vector_energy": 0.014798405580222607,
+            "bivector_energy": 0.010210534557700157,
+            "pseudoscalar_energy": 0.0033853251952677965,
+            "alignment": 0.001484639709815383,
+            "entropy": 1.4242606163024902,
+            "d_eff": 4.154784679412842,
+            "rms": 0.15519478917121887
+          },
+          "final_free_energy": -516.6046752929688,
+          "solitons": {
+            "count": 10,
+            "blob_count": 10,
+            "vortex_count": 0,
+            "mean_complexity": 6.402644157409668,
+            "max_complexity": 7.011269569396973,
+            "mean_energy": 0.4190583825111389
+          },
+          "soliton_tracks": {
+            "track_count": 15,
+            "blob_tracks": 15,
+            "vortex_tracks": 0,
+            "mean_persistence": 64.0,
+            "max_persistence": 96,
+            "active_last": 10,
+            "mean_track_complexity": 6.168458938598633,
+            "max_track_complexity": 7.011269569396973
+          },
+          "recommended_phase_channels": [
+            1,
+            4
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.20703125,
+            "energy_active_ratio": 0.204345703125,
+            "rotational_peak": 0.04842980206012726,
+            "energy_peak": 0.12879490852355957
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 0.0,
+            "mean_frame_complexity": 6.407177304228147
+          }
+        },
+        {
+          "name": "thomas_structured",
+          "regime": "thomas",
+          "transport_enabled": true,
+          "tau_enabled": true,
+          "summary_path": "artifacts/p02_benchmarks_v2/genesis_amplitude_64_seed7_spectral_96/thomas_structured/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.10702954232692719,
+            "vector_energy": 0.019260287284851074,
+            "bivector_energy": 0.008138800971210003,
+            "pseudoscalar_energy": 0.004207093268632889,
+            "alignment": 0.003431459655985236,
+            "entropy": 1.4860509634017944,
+            "d_eff": 4.419607639312744,
+            "rms": 0.1554967761039734
+          },
+          "final_free_energy": -575.6683959960938,
+          "solitons": {
+            "count": 10,
+            "blob_count": 10,
+            "vortex_count": 0,
+            "mean_complexity": 6.513918876647949,
+            "max_complexity": 7.0106520652771,
+            "mean_energy": 0.41991186141967773
+          },
+          "soliton_tracks": {
+            "track_count": 14,
+            "blob_tracks": 14,
+            "vortex_tracks": 0,
+            "mean_persistence": 68.57142857142857,
+            "max_persistence": 96,
+            "active_last": 10,
+            "mean_track_complexity": 6.317701816558838,
+            "max_track_complexity": 7.0106520652771
+          },
+          "recommended_phase_channels": [
+            1,
+            4
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.20361328125,
+            "energy_active_ratio": 0.20361328125,
+            "rotational_peak": 0.06680866330862045,
+            "energy_peak": 0.12854504585266113
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 0.0,
+            "mean_frame_complexity": 6.458326578140259
+          }
+        },
+        {
+          "name": "spinor8d_baseline",
+          "regime": "spinor8d",
+          "transport_enabled": false,
+          "tau_enabled": false,
+          "summary_path": "artifacts/p02_benchmarks_v2/genesis_amplitude_64_seed7_spectral_96/spinor8d_baseline/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.11667517572641373,
+            "vector_energy": 0.015459179878234863,
+            "bivector_energy": 0.010139646008610725,
+            "pseudoscalar_energy": 0.0035877081099897623,
+            "alignment": 0.0017893395852297544,
+            "entropy": 1.4236806631088257,
+            "d_eff": 4.1523756980896,
+            "rms": 0.15694722533226013
+          },
+          "final_free_energy": -518.026611328125,
+          "solitons": {
+            "count": 10,
+            "blob_count": 10,
+            "vortex_count": 0,
+            "mean_complexity": 6.408023834228516,
+            "max_complexity": 7.010387897491455,
+            "mean_energy": 0.425680547952652
+          },
+          "soliton_tracks": {
+            "track_count": 14,
+            "blob_tracks": 14,
+            "vortex_tracks": 0,
+            "mean_persistence": 68.57142857142857,
+            "max_persistence": 96,
+            "active_last": 10,
+            "mean_track_complexity": 6.226165294647217,
+            "max_track_complexity": 7.010387897491455
+          },
+          "recommended_phase_channels": [
+            1,
+            4
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.2080078125,
+            "energy_active_ratio": 0.20556640625,
+            "rotational_peak": 0.04679419472813606,
+            "energy_peak": 0.13025014102458954
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 0.0,
+            "mean_frame_complexity": 6.412931089599927
+          }
+        },
+        {
+          "name": "spinor8d_structured",
+          "regime": "spinor8d",
+          "transport_enabled": true,
+          "tau_enabled": true,
+          "summary_path": "artifacts/p02_benchmarks_v2/genesis_amplitude_64_seed7_spectral_96/spinor8d_structured/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.10937611758708954,
+            "vector_energy": 0.020019162446260452,
+            "bivector_energy": 0.00806298665702343,
+            "pseudoscalar_energy": 0.004434352740645409,
+            "alignment": 0.003939426504075527,
+            "entropy": 1.483377456665039,
+            "d_eff": 4.40780782699585,
+            "rms": 0.15734395384788513
+          },
+          "final_free_energy": -575.0208740234375,
+          "solitons": {
+            "count": 10,
+            "blob_count": 10,
+            "vortex_count": 0,
+            "mean_complexity": 6.515631198883057,
+            "max_complexity": 7.008711814880371,
+            "mean_energy": 0.4268953800201416
+          },
+          "soliton_tracks": {
+            "track_count": 14,
+            "blob_tracks": 14,
+            "vortex_tracks": 0,
+            "mean_persistence": 68.57142857142857,
+            "max_persistence": 96,
+            "active_last": 10,
+            "mean_track_complexity": 6.329246520996094,
+            "max_track_complexity": 7.008711814880371
+          },
+          "recommended_phase_channels": [
+            1,
+            4
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.201904296875,
+            "energy_active_ratio": 0.205078125,
+            "rotational_peak": 0.06066405028104782,
+            "energy_peak": 0.1300268918275833
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 0.0,
+            "mean_frame_complexity": 6.464360823233922
+          }
+        }
+      ]
+    },
+    {
+      "name": "genesis_phase_signed_64_seed7_spectral_96",
+      "kwargs": {
+        "steps": 96,
+        "grid_shape": [
+          64,
+          64
+        ],
+        "seed": 7,
+        "spatial_mode": "spectral",
+        "init_source": "genesis_checkpoint",
+        "genesis_projection_mode": "phase_signed"
+      },
+      "run_summary_path": "artifacts/p02_benchmarks_v2/genesis_phase_signed_64_seed7_spectral_96/summary.json",
+      "p01_gates": {
+        "all_pass": true,
+        "gates": {
+          "tau_free_energy": {
+            "pass": true,
+            "before": -869.4716186523438,
+            "after": -976.4362182617188,
+            "delta": -106.964599609375
+          },
+          "reversible_transport": {
+            "pass": true,
+            "dE_dt": 0.0
+          },
+          "spatial_smoothing": {
+            "pass": true,
+            "before_var": 1.0,
+            "after_var": 0.5531221032142639,
+            "d_eff": 1.0
+          }
+        }
+      },
+      "separation": {
+        "structured_vortex_step_gap": 0.29166666666666674,
+        "baseline_vortex_step_gap": 0.26041666666666663,
+        "structured_complexity_gap": 0.09573524196942618,
+        "baseline_complexity_gap": 0.08514073491096497,
+        "structured_rotational_active_gap": 0.0,
+        "baseline_rotational_active_gap": -0.00732421875,
+        "structured_recommended_phase_channels": [
+          3,
+          6
+        ],
+        "baseline_recommended_phase_channels": [
+          3,
+          6
+        ]
+      },
+      "cases": [
+        {
+          "name": "thomas_baseline",
+          "regime": "thomas",
+          "transport_enabled": false,
+          "tau_enabled": false,
+          "summary_path": "artifacts/p02_benchmarks_v2/genesis_phase_signed_64_seed7_spectral_96/thomas_baseline/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.13042917847633362,
+            "vector_energy": 0.007467917166650295,
+            "bivector_energy": 0.004371401853859425,
+            "pseudoscalar_energy": 0.000981641816906631,
+            "alignment": 0.011099766008555889,
+            "entropy": 0.9041747450828552,
+            "d_eff": 2.469892740249634,
+            "rms": 0.1444510519504547
+          },
+          "final_free_energy": -309.0282897949219,
+          "solitons": {
+            "count": 10,
+            "blob_count": 10,
+            "vortex_count": 0,
+            "mean_complexity": 5.708587169647217,
+            "max_complexity": 6.084300994873047,
+            "mean_energy": 0.3587798774242401
+          },
+          "soliton_tracks": {
+            "track_count": 13,
+            "blob_tracks": 12,
+            "vortex_tracks": 1,
+            "mean_persistence": 73.84615384615384,
+            "max_persistence": 96,
+            "active_last": 10,
+            "mean_track_complexity": 6.024737358093262,
+            "max_track_complexity": 8.973226547241211
+          },
+          "recommended_phase_channels": [
+            3,
+            6
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.29296875,
+            "energy_active_ratio": 0.25439453125,
+            "rotational_peak": 1.4009294509887695,
+            "energy_peak": 0.14621476829051971
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 0.5833333333333334,
+            "mean_frame_complexity": 5.971825574835141
+          }
+        },
+        {
+          "name": "thomas_structured",
+          "regime": "thomas",
+          "transport_enabled": true,
+          "tau_enabled": true,
+          "summary_path": "artifacts/p02_benchmarks_v2/genesis_phase_signed_64_seed7_spectral_96/thomas_structured/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.12426716089248657,
+            "vector_energy": 0.008046966046094894,
+            "bivector_energy": 0.00472645228728652,
+            "pseudoscalar_energy": 0.0012104746419936419,
+            "alignment": 0.013036473654210567,
+            "entropy": 0.9742268323898315,
+            "d_eff": 2.649118185043335,
+            "rms": 0.14308999478816986
+          },
+          "final_free_energy": -355.7775573730469,
+          "solitons": {
+            "count": 10,
+            "blob_count": 10,
+            "vortex_count": 0,
+            "mean_complexity": 5.786117076873779,
+            "max_complexity": 6.144574165344238,
+            "mean_energy": 0.35267263650894165
+          },
+          "soliton_tracks": {
+            "track_count": 14,
+            "blob_tracks": 13,
+            "vortex_tracks": 1,
+            "mean_persistence": 68.57142857142857,
+            "max_persistence": 96,
+            "active_last": 10,
+            "mean_track_complexity": 5.987414836883545,
+            "max_track_complexity": 9.000462532043457
+          },
+          "recommended_phase_channels": [
+            3,
+            6
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.27880859375,
+            "energy_active_ratio": 0.251220703125,
+            "rotational_peak": 1.3848063945770264,
+            "energy_peak": 0.14358080923557281
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 0.5416666666666666,
+            "mean_frame_complexity": 6.002418140570323
+          }
+        },
+        {
+          "name": "spinor8d_baseline",
+          "regime": "spinor8d",
+          "transport_enabled": false,
+          "tau_enabled": false,
+          "summary_path": "artifacts/p02_benchmarks_v2/genesis_phase_signed_64_seed7_spectral_96/spinor8d_baseline/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.13305160403251648,
+            "vector_energy": 0.007795572280883789,
+            "bivector_energy": 0.004662112332880497,
+            "pseudoscalar_energy": 0.0009830016642808914,
+            "alignment": 0.01195099763572216,
+            "entropy": 0.9192214012145996,
+            "d_eff": 2.5073375701904297,
+            "rms": 0.1463761180639267
+          },
+          "final_free_energy": -316.3263854980469,
+          "solitons": {
+            "count": 10,
+            "blob_count": 10,
+            "vortex_count": 0,
+            "mean_complexity": 5.7353739738464355,
+            "max_complexity": 6.097936630249023,
+            "mean_energy": 0.36547431349754333
+          },
+          "soliton_tracks": {
+            "track_count": 14,
+            "blob_tracks": 13,
+            "vortex_tracks": 1,
+            "mean_persistence": 68.57142857142857,
+            "max_persistence": 96,
+            "active_last": 10,
+            "mean_track_complexity": 5.96516752243042,
+            "max_track_complexity": 9.068516731262207
+          },
+          "recommended_phase_channels": [
+            3,
+            6
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.28564453125,
+            "energy_active_ratio": 0.254150390625,
+            "rotational_peak": 1.3732473850250244,
+            "energy_peak": 0.14949914813041687
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 0.84375,
+            "mean_frame_complexity": 6.056966309746106
+          }
+        },
+        {
+          "name": "spinor8d_structured",
+          "regime": "spinor8d",
+          "transport_enabled": true,
+          "tau_enabled": true,
+          "summary_path": "artifacts/p02_benchmarks_v2/genesis_phase_signed_64_seed7_spectral_96/spinor8d_structured/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.1268157958984375,
+            "vector_energy": 0.008358455263078213,
+            "bivector_energy": 0.005064843222498894,
+            "pseudoscalar_energy": 0.001199223450385034,
+            "alignment": 0.013928629457950592,
+            "entropy": 0.9879270195960999,
+            "d_eff": 2.6856613159179688,
+            "rms": 0.14503662288188934
+          },
+          "final_free_energy": -362.3668518066406,
+          "solitons": {
+            "count": 10,
+            "blob_count": 10,
+            "vortex_count": 0,
+            "mean_complexity": 5.807452201843262,
+            "max_complexity": 6.155269145965576,
+            "mean_energy": 0.35919803380966187
+          },
+          "soliton_tracks": {
+            "track_count": 13,
+            "blob_tracks": 12,
+            "vortex_tracks": 1,
+            "mean_persistence": 73.84615384615384,
+            "max_persistence": 96,
+            "active_last": 10,
+            "mean_track_complexity": 6.063023090362549,
+            "max_track_complexity": 9.07060718536377
+          },
+          "recommended_phase_channels": [
+            3,
+            6
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.27880859375,
+            "energy_active_ratio": 0.25048828125,
+            "rotational_peak": 1.3787821531295776,
+            "energy_peak": 0.14690838754177094
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 0.8333333333333334,
+            "mean_frame_complexity": 6.098153382539749
+          }
+        }
+      ]
+    },
+    {
+      "name": "genesis_phase_signed_64_seed17_spectral_96",
+      "kwargs": {
+        "steps": 96,
+        "grid_shape": [
+          64,
+          64
+        ],
+        "seed": 17,
+        "spatial_mode": "spectral",
+        "init_source": "genesis_checkpoint",
+        "genesis_projection_mode": "phase_signed"
+      },
+      "run_summary_path": "artifacts/p02_benchmarks_v2/genesis_phase_signed_64_seed17_spectral_96/summary.json",
+      "p01_gates": {
+        "all_pass": true,
+        "gates": {
+          "tau_free_energy": {
+            "pass": true,
+            "before": -872.6216430664062,
+            "after": -978.0574951171875,
+            "delta": -105.43585205078125
+          },
+          "reversible_transport": {
+            "pass": true,
+            "dE_dt": 0.0
+          },
+          "spatial_smoothing": {
+            "pass": true,
+            "before_var": 1.0,
+            "after_var": 0.5531221032142639,
+            "d_eff": 1.0
+          }
+        }
+      },
+      "separation": {
+        "structured_vortex_step_gap": 0.29166666666666674,
+        "baseline_vortex_step_gap": 0.26041666666666663,
+        "structured_complexity_gap": 0.09573524196942618,
+        "baseline_complexity_gap": 0.08514073491096497,
+        "structured_rotational_active_gap": 0.0,
+        "baseline_rotational_active_gap": -0.00732421875,
+        "structured_recommended_phase_channels": [
+          3,
+          6
+        ],
+        "baseline_recommended_phase_channels": [
+          3,
+          6
+        ]
+      },
+      "cases": [
+        {
+          "name": "thomas_baseline",
+          "regime": "thomas",
+          "transport_enabled": false,
+          "tau_enabled": false,
+          "summary_path": "artifacts/p02_benchmarks_v2/genesis_phase_signed_64_seed17_spectral_96/thomas_baseline/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.13042917847633362,
+            "vector_energy": 0.007467917166650295,
+            "bivector_energy": 0.004371401853859425,
+            "pseudoscalar_energy": 0.000981641816906631,
+            "alignment": 0.011099766008555889,
+            "entropy": 0.9041747450828552,
+            "d_eff": 2.469892740249634,
+            "rms": 0.1444510519504547
+          },
+          "final_free_energy": -309.0282897949219,
+          "solitons": {
+            "count": 10,
+            "blob_count": 10,
+            "vortex_count": 0,
+            "mean_complexity": 5.708587169647217,
+            "max_complexity": 6.084300994873047,
+            "mean_energy": 0.3587798774242401
+          },
+          "soliton_tracks": {
+            "track_count": 13,
+            "blob_tracks": 12,
+            "vortex_tracks": 1,
+            "mean_persistence": 73.84615384615384,
+            "max_persistence": 96,
+            "active_last": 10,
+            "mean_track_complexity": 6.024737358093262,
+            "max_track_complexity": 8.973226547241211
+          },
+          "recommended_phase_channels": [
+            3,
+            6
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.29296875,
+            "energy_active_ratio": 0.25439453125,
+            "rotational_peak": 1.4009294509887695,
+            "energy_peak": 0.14621476829051971
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 0.5833333333333334,
+            "mean_frame_complexity": 5.971825574835141
+          }
+        },
+        {
+          "name": "thomas_structured",
+          "regime": "thomas",
+          "transport_enabled": true,
+          "tau_enabled": true,
+          "summary_path": "artifacts/p02_benchmarks_v2/genesis_phase_signed_64_seed17_spectral_96/thomas_structured/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.12426716089248657,
+            "vector_energy": 0.008046966046094894,
+            "bivector_energy": 0.00472645228728652,
+            "pseudoscalar_energy": 0.0012104746419936419,
+            "alignment": 0.013036473654210567,
+            "entropy": 0.9742268323898315,
+            "d_eff": 2.649118185043335,
+            "rms": 0.14308999478816986
+          },
+          "final_free_energy": -355.7775573730469,
+          "solitons": {
+            "count": 10,
+            "blob_count": 10,
+            "vortex_count": 0,
+            "mean_complexity": 5.786117076873779,
+            "max_complexity": 6.144574165344238,
+            "mean_energy": 0.35267263650894165
+          },
+          "soliton_tracks": {
+            "track_count": 14,
+            "blob_tracks": 13,
+            "vortex_tracks": 1,
+            "mean_persistence": 68.57142857142857,
+            "max_persistence": 96,
+            "active_last": 10,
+            "mean_track_complexity": 5.987414836883545,
+            "max_track_complexity": 9.000462532043457
+          },
+          "recommended_phase_channels": [
+            3,
+            6
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.27880859375,
+            "energy_active_ratio": 0.251220703125,
+            "rotational_peak": 1.3848063945770264,
+            "energy_peak": 0.14358080923557281
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 0.5416666666666666,
+            "mean_frame_complexity": 6.002418140570323
+          }
+        },
+        {
+          "name": "spinor8d_baseline",
+          "regime": "spinor8d",
+          "transport_enabled": false,
+          "tau_enabled": false,
+          "summary_path": "artifacts/p02_benchmarks_v2/genesis_phase_signed_64_seed17_spectral_96/spinor8d_baseline/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.13305160403251648,
+            "vector_energy": 0.007795572280883789,
+            "bivector_energy": 0.004662112332880497,
+            "pseudoscalar_energy": 0.0009830016642808914,
+            "alignment": 0.01195099763572216,
+            "entropy": 0.9192214012145996,
+            "d_eff": 2.5073375701904297,
+            "rms": 0.1463761180639267
+          },
+          "final_free_energy": -316.3263854980469,
+          "solitons": {
+            "count": 10,
+            "blob_count": 10,
+            "vortex_count": 0,
+            "mean_complexity": 5.7353739738464355,
+            "max_complexity": 6.097936630249023,
+            "mean_energy": 0.36547431349754333
+          },
+          "soliton_tracks": {
+            "track_count": 14,
+            "blob_tracks": 13,
+            "vortex_tracks": 1,
+            "mean_persistence": 68.57142857142857,
+            "max_persistence": 96,
+            "active_last": 10,
+            "mean_track_complexity": 5.96516752243042,
+            "max_track_complexity": 9.068516731262207
+          },
+          "recommended_phase_channels": [
+            3,
+            6
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.28564453125,
+            "energy_active_ratio": 0.254150390625,
+            "rotational_peak": 1.3732473850250244,
+            "energy_peak": 0.14949914813041687
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 0.84375,
+            "mean_frame_complexity": 6.056966309746106
+          }
+        },
+        {
+          "name": "spinor8d_structured",
+          "regime": "spinor8d",
+          "transport_enabled": true,
+          "tau_enabled": true,
+          "summary_path": "artifacts/p02_benchmarks_v2/genesis_phase_signed_64_seed17_spectral_96/spinor8d_structured/summary.json",
+          "final_metrics": {
+            "scalar_energy": 0.1268157958984375,
+            "vector_energy": 0.008358455263078213,
+            "bivector_energy": 0.005064843222498894,
+            "pseudoscalar_energy": 0.001199223450385034,
+            "alignment": 0.013928629457950592,
+            "entropy": 0.9879270195960999,
+            "d_eff": 2.6856613159179688,
+            "rms": 0.14503662288188934
+          },
+          "final_free_energy": -362.3668518066406,
+          "solitons": {
+            "count": 10,
+            "blob_count": 10,
+            "vortex_count": 0,
+            "mean_complexity": 5.807452201843262,
+            "max_complexity": 6.155269145965576,
+            "mean_energy": 0.35919803380966187
+          },
+          "soliton_tracks": {
+            "track_count": 13,
+            "blob_tracks": 12,
+            "vortex_tracks": 1,
+            "mean_persistence": 73.84615384615384,
+            "max_persistence": 96,
+            "active_last": 10,
+            "mean_track_complexity": 6.063023090362549,
+            "max_track_complexity": 9.07060718536377
+          },
+          "recommended_phase_channels": [
+            3,
+            6
+          ],
+          "amr": {
+            "rotational_active_ratio": 0.27880859375,
+            "energy_active_ratio": 0.25048828125,
+            "rotational_peak": 1.3787821531295776,
+            "energy_peak": 0.14690838754177094
+          },
+          "temporal_topology": {
+            "vortex_step_fraction": 0.8333333333333334,
+            "mean_frame_complexity": 6.098153382539749
+          }
+        }
+      ]
+    }
+  ],
+  "leaderboard": [
+    {
+      "name": "genesis_phase_signed_64_seed7_spectral_96",
+      "p01_all_pass": true,
+      "structured_vortex_step_gap": 0.29166666666666674,
+      "baseline_vortex_step_gap": 0.26041666666666663,
+      "structured_complexity_gap": 0.09573524196942618,
+      "baseline_complexity_gap": 0.08514073491096497,
+      "structured_rotational_active_gap": 0.0,
+      "baseline_rotational_active_gap": -0.00732421875,
+      "structured_recommended_phase_channels": [
+        3,
+        6
+      ],
+      "baseline_recommended_phase_channels": [
+        3,
+        6
+      ]
+    },
+    {
+      "name": "genesis_phase_signed_64_seed17_spectral_96",
+      "p01_all_pass": true,
+      "structured_vortex_step_gap": 0.29166666666666674,
+      "baseline_vortex_step_gap": 0.26041666666666663,
+      "structured_complexity_gap": 0.09573524196942618,
+      "baseline_complexity_gap": 0.08514073491096497,
+      "structured_rotational_active_gap": 0.0,
+      "baseline_rotational_active_gap": -0.00732421875,
+      "structured_recommended_phase_channels": [
+        3,
+        6
+      ],
+      "baseline_recommended_phase_channels": [
+        3,
+        6
+      ]
+    },
+    {
+      "name": "noise_64_seed7_spectral_96",
+      "p01_all_pass": true,
+      "structured_vortex_step_gap": 0.0,
+      "baseline_vortex_step_gap": 0.0,
+      "structured_complexity_gap": 0.18826296428839484,
+      "baseline_complexity_gap": 0.11282138029734234,
+      "structured_rotational_active_gap": -0.00244140625,
+      "baseline_rotational_active_gap": -0.00390625,
+      "structured_recommended_phase_channels": [
+        3,
+        6
+      ],
+      "baseline_recommended_phase_channels": [
+        3,
+        6
+      ]
+    },
+    {
+      "name": "noise_64_seed17_spectral_96",
+      "p01_all_pass": true,
+      "structured_vortex_step_gap": 0.0,
+      "baseline_vortex_step_gap": 0.0,
+      "structured_complexity_gap": 0.17691397666931152,
+      "baseline_complexity_gap": 0.04518668850263019,
+      "structured_rotational_active_gap": 0.0,
+      "baseline_rotational_active_gap": -0.002197265625,
+      "structured_recommended_phase_channels": [
+        1,
+        4
+      ],
+      "baseline_recommended_phase_channels": [
+        1,
+        4
+      ]
+    },
+    {
+      "name": "noise_96_seed7_spectral_192",
+      "p01_all_pass": true,
+      "structured_vortex_step_gap": 0.0,
+      "baseline_vortex_step_gap": 0.0,
+      "structured_complexity_gap": 0.14545785635709763,
+      "baseline_complexity_gap": 0.26352909207344055,
+      "structured_rotational_active_gap": -0.00390625,
+      "baseline_rotational_active_gap": 0.00010851025581359863,
+      "structured_recommended_phase_channels": [
+        1,
+        4
+      ],
+      "baseline_recommended_phase_channels": [
+        1,
+        4
+      ]
+    },
+    {
+      "name": "noise_64_seed7_laplacian_96",
+      "p01_all_pass": true,
+      "structured_vortex_step_gap": 0.0,
+      "baseline_vortex_step_gap": 0.0,
+      "structured_complexity_gap": 0.04232188562552075,
+      "baseline_complexity_gap": 0.07722757756710052,
+      "structured_rotational_active_gap": 0.005126953125,
+      "baseline_rotational_active_gap": -0.00439453125,
+      "structured_recommended_phase_channels": [
+        3,
+        6
+      ],
+      "baseline_recommended_phase_channels": [
+        3,
+        6
+      ]
+    },
+    {
+      "name": "genesis_amplitude_64_seed7_spectral_96",
+      "p01_all_pass": true,
+      "structured_vortex_step_gap": 0.0,
+      "baseline_vortex_step_gap": 0.0,
+      "structured_complexity_gap": 0.0060342450936632375,
+      "baseline_complexity_gap": 0.0057537853717803955,
+      "structured_rotational_active_gap": -0.001708984375,
+      "baseline_rotational_active_gap": 0.0009765625,
+      "structured_recommended_phase_channels": [
+        1,
+        4
+      ],
+      "baseline_recommended_phase_channels": [
+        1,
+        4
+      ]
+    }
+  ]
+}

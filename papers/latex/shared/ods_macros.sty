@@ -1,0 +1,54 @@
+% ods_macros.sty — shared macros for ODS paper series
+% Usage: \usepackage{../shared/ods_macros}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{ods_macros}[2026/03/22 ODS paper macros]
+
+% --- Field and algebra ---
+\newcommand{\Cl}{\mathrm{Cl}}
+\newcommand{\Psif}{\boldsymbol{\Psi}}
+\newcommand{\slice}[1]{\Psif^{(#1)}}
+\newcommand{\grade}[1]{\Pi_{#1}}
+\newcommand{\e}[1]{e_{#1}}
+\newcommand{\bvec}[1]{\boldsymbol{#1}}
+
+% --- Energetics ---
+\newcommand{\freeE}{\mathcal{F}}
+\newcommand{\entropy}{H}
+\newcommand{\deff}{d_{\mathrm{eff}}}
+\newcommand{\alignfrac}{\alpha_{12}}
+
+% --- Operators ---
+\newcommand{\SK}{S_K}
+\newcommand{\Dh}{D_h}
+\newcommand{\Lh}{\Delta_h}
+\newcommand{\lam}{\lambda(K)}
+\newcommand{\Kgeom}{K_{\mathrm{geom}}}
+\newcommand{\Kmem}{K_{\mathrm{mem}}}
+\newcommand{\Ktot}{K_{\tau}}
+
+% --- Transport ---
+\newcommand{\omegaT}{\omega_{12}}
+\newcommand{\gammaT}{\gamma_{12}}
+\newcommand{\Etwelve}{E_{12}}
+
+% --- Solitons ---
+\newcommand{\Qcharge}{Q}
+\newcommand{\complexity}{\mathcal{C}}
+\newcommand{\vortexfrac}{f_{\mathrm{vortex}}}
+
+% --- OAM ---
+\newcommand{\oamcoher}{q_m}
+\newcommand{\phiBiv}{\phi_B}
+
+% --- Gamma virtual ---
+\newcommand{\GammaVirt}{\Gamma_{\mathrm{virt}}}
+\newcommand{\focusIdx}{\mathcal{F}_\Gamma}
+\newcommand{\Cslice}{C_{\mathrm{slice}}}
+\newcommand{\Hgrade}{H_{\mathrm{grade}}}
+\newcommand{\Rgarbage}{R_{\mathrm{garbage}}}
+
+% --- Clocks ---
+\newcommand{\dtau}{\Delta\tau}
+\newcommand{\dt}{\Delta t}
+
+\endinput
