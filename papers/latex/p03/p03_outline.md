@@ -119,15 +119,74 @@ grade energy index via projection.
 
 ---
 
+## New pieces from review (2026-03-24)
+
+### Claim 6 (candidate): χ trigger as formalized handoff criterion
+
+**Statement**: Define a dimensionless, regular, monotonic validity functional:
+
+    χ(x,t) = w₁·(η_crit/η) + w₂·Kn_loc + w₃·|ω|/ω_ref + w₄·B(t)
+
+where B(t) = ∫_{t-Δt}^{t} ||ω(·,s)||_{L∞} ds (windowed BKM sentinel).
+
+Properties:
+- χ ∈ C⁰(Ψ), ideally C¹ (no jumps in handoff)
+- ∂_Ψ χ · δΨ ≥ 0 in critical regime (monotonicity = interpretability)
+- All terms dimensionless
+
+When χ > χ*, dynamics transfer from fast clock t to structural clock τ.
+
+**Paper-ready statement**: "We do not claim to predict finite-time singularities.
+We define an operational breakdown criterion for the continuum closure. When
+exceeded, dynamics are transferred to the structural clock τ."
+
+**Test needed**:
+- χ increases when tension/enstrophy increases
+- χ = 0 for uniform fields
+- Handoff α = σ(χ) is smooth (C¹ in Ψ)
+
+### Spectral coherence (new metric)
+
+    C_spec = Σ_k λ_k² / (Σ_k |λ_k|)²
+
+Measures spectral dispersion. Intermediate between gap (local) and torsion (global).
+
+### Spectral entropy (explicit)
+
+    H_spec = -Σ_k p_k log p_k,   p_k = |λ_k| / Σ_j |λ_j|
+
+Connects with d_eff, τ, and χ. Already implicit in code, needs to be explicit.
+
+### Remark: Σ_par = Ψ_par·Ψ̃_par
+
+Observable of the even sector (scalar + bivector). Gives scalar magnitude +
+pseudoscalar chirality. Only valid for even subalgebra — does NOT work for
+general multivectors (Gemini overclaims this).
+
+### Future: Spectral torsion T(D)
+
+Refined invariant for nonminimal Hodge–Dirac operators (arXiv 2025).
+Candidate for appendix or future extension.
+
+---
+
+## Overnight data available (2026-03-23)
+
+- `03_commutator_sweep.json` — 126 configurations (42 × 3 seeds)
+- `05_regime_separability.json` — Cohen's d: focus=15, entropy=123, tension=50, d_eff=415
+
+---
+
 ## What's missing in the codebase
 
 1. **tcl_offline.py** (persistent homology β₀, β₁, β₂) — referenced in plans but not yet verified as a standalone claim
 2. **Spectral monitor** — appears to be a convenience wrapper, not new math
 3. **Pinning metrics** — unclear if independently testable
-4. No sweep infrastructure for Claim 1 (need to run commutator defect over a parameter grid)
+4. χ trigger not yet implemented — needs new module or extension of existing focus_score
+5. C_spec and H_spec not yet computed — straightforward from existing eigenvalue computation
 
 ---
 
 ## Test file
 
-`_claude/tests/paper_claims/test_p03_claims.py`
+`tests/paper_claims/test_p03_claims.py` (in ods-papers repo)

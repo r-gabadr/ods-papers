@@ -114,9 +114,87 @@ See `_claude/tests/paper_claims/test_p05_claims.py` and
 
 ---
 
+## Overnight results (2026-03-23)
+
+### Contractivity: ALL maps individually contractive
+- rotor_r090: c_max = 0.900 (exact, all grids)
+- rotor_delta_085_010: c_max ≈ 0.910 (all grids, 100%)
+- rotor_delta_085_020: c_max ≈ 0.970 (all grids, 100%)
+- gamma_flow (dt=0.01-0.02): c_max ≈ 0.9997 (100%)
+- defect_stab (dt=0.001-0.01): c_max ≈ 0.9992 (100%)
+- laplacian (α=0.005-0.02): c_max ≈ 0.48-0.82 (100%)
+
+### Hutchinson convergence: CONDITIONAL
+| Config | r | δ | Converges? | Final ratio |
+|--------|---|---|-----------|-------------|
+| conservative (r=0.70, δ=0.10) | ✅ | | 0.79 |
+| moderate (r=0.80, δ=0.15) | ✅ slow | | 0.95 |
+| aggressive (r=0.85, δ=0.20) | ❌ saturates ~44 | | ≈1.0 |
+| boundary (r=0.90, δ=0.15) | ❌ saturates ~55 | | ≈1.0 |
+
+### Fixed point uniqueness: CONFIRMED
+20 random starts × 80 iterations → pairwise distance = 0.000000
+
+### Texture stability
+Single-scale 3.1-3.5× more stable than multiscale under perturbation.
+
+### Regime separability
+Cohen's d: focus=15, entropy=123, tension=50, d_eff=415 (Thomas vs Spinor).
+
+---
+
+## New pieces from review (2026-03-24)
+
+### Lifting-evolution-projection cycle (formalize)
+
+    x_{n+1} = Ψ ∘ T ∘ Φ(x_n)
+
+where Φ = FFT/Clifford lifting, T = dynamics in slices/rotors, Ψ = projection.
+This is already implicit in the runtime (FFT → filter → IFFT).
+
+### Smooth interpolation α = σ(χ)
+
+    Ψ_{n+1} = (1-α)·F_t(Ψ_n) + α·S_λ ∘ F_τ(Ψ_n)
+    α = σ((χ(Ψ_n) - χ₀) / ε)
+
+Required: ∂_τ F(Ψ) ≤ 0 (τ regime always dissipates).
+This turns α from blending into a dissipative regime selector.
+
+### Explicit contractivity condition
+
+    |Ψ_{n+1} - Ψ*| ≤ ρ|Ψ_n - Ψ*|,  ρ < 1
+
+Or weaker: F(Ψ_{n+1}) ≤ F(Ψ_n). Connects with Hutchinson + free energy.
+
+### Inter-slice consistency (formalize)
+
+    E_slice = Σ_{ℓ≠ℓ'} |Π_ℓ Ψ - T_{ℓ→ℓ'}(Π_{ℓ'} Ψ)|²  ≤  ε
+
+Closes multislice + transport + global coherence.
+
+### Remark (Future): Γ_virt state-dependent
+
+    Γ_virt^μ = Σ_a β_a(Ψ) · Γ_a^μ
+
+Not a claim. Remark/Future extension only. Already has Clifford structure;
+connects with state-dependent Dirac operator. Not testable now.
+
+---
+
+## Decision for paper title
+
+**Main claim**: Multiscale Contractive Extension
+**Conditional claim**: Hutchinson Fractal Variant (r + Lip(Δ) < ~0.85)
+**Honest note**: "Individual contractivity is supported empirically over the
+sampled operational domain. A uniform global proof on the full state space
+is left for future work."
+
+---
+
 ## Figures (planned)
 
 1. **Contractivity scatter**: ||Φ(Ψ₁)-Φ(Ψ₂)|| vs ||Ψ₁-Ψ₂|| for individual maps
-2. **Hausdorff convergence**: d_H(H^n(K₀), K*) over iterations (if Variant B works)
-3. **Fixed point convergence**: ||T^n(Ψ₀) - A*|| over iterations
+2. **Hausdorff convergence**: d_H(H^n(K₀), K*) over iterations (conservative + moderate)
+3. **Fixed point convergence**: ||T^n(Ψ₀) - A*|| over iterations (20 starts)
 4. **Multiscale descriptor**: D_d values at different depths d
+5. **Regime boundary**: contractivity ratio vs (r, δ) parameter space
