@@ -10,6 +10,12 @@ latex/
 │   ├── ods_macros.sty    — macros compartidos (Clifford, operadores, observables)
 │   └── references.bib    — bibliografía compartida
 ├── p01/                  — P01: CT Runtime (fuente en Zenodo 10.5281/zenodo.18995428)
+├── p03/
+│   └── p03_outline.md    — observabilidad, panel espectral y trigger de admisibilidad
+├── p05/
+│   └── p05_outline.md    — extensión contractiva/fractal y representantes comprimidos
+├── p06/
+│   └── p06_outline.md    — handoff de closure y envelopes declarativos de control
 └── p02/
     ├── p02_regimes.tex   — P02: Regímenes, solitones, modulación inter-grade
     └── tables/           — tablas LaTeX generadas por scripts/export_p02_csv.py

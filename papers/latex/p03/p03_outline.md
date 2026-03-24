@@ -1,192 +1,231 @@
-# P03 — Observability, Spectral Coherence, and Topological Control in a Clifford--Thomas Runtime
+# P03 — Observability, Spectral Coherence, and Admissibility Triggers in a Clifford Runtime
 
-**Status**: Outline draft
+**Status**: Outline draft aligned with the unified formulation
 **Depends on**: P01 (runtime), P02 (regimes)
 **Target**: Zenodo preprint
 
 ---
 
-## Abstract (draft)
+## Scope
 
-We establish an observability framework for the CT runtime in Cl(3,0).
-Three independent measurement channels — commutator defect, spectral graph
-connectivity (Fiedler λ₂), and rotational tension maps — together provide a
-complete observability panel for runtime state without full state reconstruction.
-We show that (1) the t/τ clock commutator defect quantifies non-commutativity
-of the split-time architecture, (2) algebraic connectivity λ₂ tracks field
-coherence across slices via a spectral graph construction, and (3) rotational
-tension localizes topological activity in the bivector sector.
-A gamma_focus_score derived from grade entropy and bivector coherence serves as
-an effective observability-to-action bridge.
+`P03` is the observability paper. Its job is to define and validate the
+runtime observables that make later decisions possible. It should **not**
+absorb:
+
+- fractal / contractive structure claims from `P05`;
+- closure or fluid-singularity language from `P06`;
+- exact generalized slice-monogenic or spectral torsion implementations.
+
+The correct narrative is:
+
+    observability -> admissibility trigger -> downstream action
+
+where the downstream action is implemented in the runtime and formalized more
+fully elsewhere.
 
 ---
 
-## Claims and Evidence
+## Abstract (draft)
 
-### Claim 1: Commutator defect measures clock non-commutativity
+We define an observability layer for a Clifford-valued runtime in `Cl(3,0)`
+using independent channels that can be measured without full state
+reconstruction. The formal layer consists of a split-clock commutator defect,
+slice spectral connectivity, rotational activity, and grade-sensitive focus
+scores. The operational layer packages these observables into a smooth
+admissibility trigger `chi`, which is used by the runtime to gate control and
+multiscale responses. The paper is deliberately modest: it documents what is
+implemented, distinguishes runtime surrogates from stronger mathematical
+objects, and leaves closure and handoff claims to `P06`.
 
-**Statement**: `||Step_τ ∘ Step_t(Ψ) - Step_t ∘ Step_τ(Ψ)||₂ > 0` when both
-clocks are active, quantifying the non-Abelian structure of the split-time
-architecture.
+---
 
-**Code**: `observability.compute_commutator_defect(Psi, params)`
-- Applies `step_frozen` in both orders: t-then-τ vs τ-then-t
-- Returns RMS of the difference
+## Formal
 
-**Test needed**:
-- Defect > 0 when ω₁₂ > 0 and k_τ > 0
-- Defect = 0 when either clock is disabled
-- Defect scales monotonically with ω₁₂ (at fixed k_τ)
-- Defect scales monotonically with k_τ (at fixed ω₁₂)
+### Formal object 1: split-clock commutator defect
 
-### Claim 2: Algebraic connectivity λ₂ tracks field coherence
+For fast and structural updates `Step_t` and `Step_tau`, define
 
-**Statement**: The Fiedler eigenvalue λ₂ of a Gaussian-kernel graph over
-slice feature vectors measures inter-slice coherence. λ₂ → 0 means
-disconnected slices; λ₂ large means uniform coherence.
+    Delta_comm(Psi) = ||Step_tau o Step_t(Psi) - Step_t o Step_tau(Psi)||_2.
 
-**Code**: `tcl_spectral.build_tcl_spectral_report(field)`
-- Feature matrix: [scalar_E, vector_E, bivector_E, pseudo_E, coherence, disorder, capacity, attractor_residual] per slice
-- Gaussian adjacency: `A_ij = exp(-||f_i - f_j||² / 2σ²)`
-- Graph Laplacian: `L = D - A`
-- λ₂ = second smallest eigenvalue of L
+This is the clean observable of non-commutativity in the split-time
+architecture. It is an observability object, not yet a closure theorem.
 
-**Test needed**:
-- λ₂ > 0 for non-trivial fields
-- λ₂ increases when slices are made more similar
-- λ₂ correlates with OAM group coherence
-- t₀_spec = 1/λ₂ as characteristic mixing time
+### Formal object 2: slice spectral coherence
 
-### Claim 3: Rotational tension localizes topological activity
+Given slice feature vectors `f_ell`, define a Gaussian-kernel adjacency and
+graph Laplacian
 
-**Statement**: The rotational tension map `R(x) = √(Δrow² + Δcol²)` where
-`Δ = 1 - |⟨b̂(x), b̂(neighbor)⟩|` localizes regions of high bivector
-orientation change — topological activity hotspots.
+    A_ij = exp(-||f_i - f_j||^2 / 2 sigma^2),   L = D - A.
 
-**Code**: `amr.rotational_tension_map(Psi)`
-- Normalizes bivector sector
-- Computes alignment with row/col neighbors
-- Tension = misalignment magnitude
+The Fiedler value `lambda_2(L)` is the minimal formal connectivity signal.
+Two auxiliary slice-spectrum statistics are also useful:
 
-**Test needed**:
-- Tension map correlates with vortex locations (from P02 soliton detector)
-- Activity mask at quantile q=0.9 captures > 50% of vortex centers
-- Tension map is zero for spatially uniform bivector fields
-- Higher attractor dimension → higher mean tension
+    C_spec = sum_k lambda_k^2 / (sum_k |lambda_k|)^2
+    H_spec = -sum_k p_k log p_k,   p_k = |lambda_k| / sum_j |lambda_j|.
 
-### Claim 4: gamma_focus_score as observability-to-action bridge
+These quantify concentration and dispersion of the slice spectrum.
 
-**Statement**: `gamma_focus = b_ratio + 0.24·φ_ratio + 0.22·coherence - 0.28·H_grade`
-provides a single scalar that bridges observability (what the field is doing)
-to action (whether to activate gamma flow).
+### Formal object 3: rotational activity
 
-**Code**: `gamma_virtual.gamma_focus_score(field_mv)`
-- b_ratio = bivector_energy / total_energy
-- φ_ratio = pseudoscalar_energy / total_energy
-- coherence = ||mean(b̂)||/√3
-- H_grade = normalized grade entropy
+Let `b_hat(x)` be the normalized bivector sector. The local rotational tension
+map is a nearest-neighbor misalignment observable:
 
-**Test needed**:
-- Score > 0 for bivector-dominated fields
-- Score decreases as grade entropy increases (more uniform grade distribution)
-- Score correlates with vortex persistence (from P02)
+    R(x) = sqrt(Delta_row(x)^2 + Delta_col(x)^2),
 
-### Claim 5: Defect stabilizer preserves spin index
+with `Delta = 1 - |<b_hat(x), b_hat(neighbor)>|`.
 
-**Statement**: The defect stabilizing flow `g·(α·∇²Ψ - β·D_filtered)` gated
-by `σ(gain·(D - threshold))` reduces Dirac defect while preserving the spin
-grade energy index via projection.
+This localizes rapid bivector reorientation without claiming a full topological
+classification theorem.
 
-**Code**: `defect_stabilizer.apply_defect_stabilizer(field_mv, dt_tau=...)`
-- Gate activates when dirac_defect > threshold
-- Flow = Laplacian smoothing minus filtered Dirac term
-- Projection: removes component along spin_index gradient
-- Selection: picks mixing parameter η that doesn't increase defect
+### Formal object 4: observability-to-admissibility trigger
 
-**Test needed**:
-- Dirac defect decreases or stays constant after application
-- Spin grade energy index is preserved (within tolerance)
-- Gate = 0 when defect < threshold
+The paper-level object is a smooth, dimensionless validity functional
+
+    chi = chi(eta, Kn_loc, |omega|, B, ...)
+
+whose role is operational: it marks when the current continuum-style update is
+becoming unreliable enough that the runtime should tighten control envelopes or
+hand off to another regime.
+
+In `P03`, `chi` is only an admissibility trigger. The closure/handoff reading
+belongs to `P06`.
+
+---
+
+## Operational V1
+
+### Implemented now
+
+1. **Commutator defect**
+   - `ods_unified_v2.jax_runtime.observability.compute_commutator_defect(...)`
+   - tests already cover positive defect with both clocks active and collapse
+     to zero when one branch is disabled.
+
+2. **Slice spectral report**
+   - `ods_unified_v2.jax_runtime.tcl_spectral.build_tcl_spectral_report(...)`
+   - runtime quantities now explicit:
+     - `lambda2`
+     - `spectral_coherence(...)`
+     - `spectral_entropy(...)`
+     - `t0_spec`, `t1_spec`, `t_spec`
+
+3. **Rotational activity**
+   - `ods_unified_v2.jax_runtime.amr.rotational_tension_map(...)`
+   - `activity_mask(...)`, `activity_ratio(...)`
+
+4. **Focus / grade bridge**
+   - `ods_unified_v2.jax_runtime.gamma_virtual.gamma_focus_score(...)`
+   - `gamma_grade_entropy(...)`
+
+5. **Admissibility trigger**
+   - `ods_unified_v2.jax_runtime.observability.compute_chi(...)`
+   - `handoff_alpha(...)`
+
+6. **Operational topology proxies**
+   - `ods_unified_v2.jax_runtime.spectral_monitor`
+   - `betti_numbers`, `topological_drift`, and stability flags are accepted as
+     runtime proxies, not as paper-level persistent-homology theorems.
+
+### Surrogates / proxies only
+
+- `D_Psi^dagger D_Psi` as an exact state-dependent geometric operator
+- exact generalized slice-monogenic admissible decomposition in the sense of
+  Hu--Ding
+- spectral torsion in the sense of Wang--Wang
+- q-Dirac double-clock torsion as a literature-backed invariant
+- full persistent homology as a primary claim
+
+### Future
+
+- refined admissible slice classes motivated by Hu--Ding
+- stronger spectral metrology motivated by Wang--Wang
+- tighter integration between `chi` and declarative control envelopes
+- appendix-level comparison between runtime topology proxies and offline
+  persistent homology
+
+---
+
+## Public Claim Set
+
+### Claim A: commutator defect measures split-clock non-commutativity
+
+**Paper-safe statement**:
+
+    Delta_comm(Psi) > 0
+
+when both clocks are active, and collapses when one branch is disabled.
+
+This is implemented and tested.
+
+### Claim B: slice spectral quantities measure coherence, not full geometry
+
+**Paper-safe statement**:
+
+`lambda_2`, `C_spec`, and `H_spec` provide an operational panel for inter-slice
+coherence and spectral concentration/dispersion.
+
+This is implemented and tested as a runtime spectral panel. It is **not** an
+exact spectral torsion claim.
+
+### Claim C: rotational tension localizes activity hotspots
+
+**Paper-safe statement**:
+
+The rotational tension map detects localized bivector reorientation and yields
+stable activity masks suitable for AMR and control.
+
+This is implemented and tested.
+
+### Claim D: `chi` is an admissibility trigger, not a singularity predictor
+
+**Paper-safe statement**:
+
+`chi` is a smooth, dimensionless operational validity functional used to gate
+runtime responses.
+
+This is implemented. `P03` does **not** claim that `chi` predicts singularity
+formation or proves continuum breakdown.
 
 ---
 
 ## Figures (planned)
 
-1. **Commutator defect heatmap**: defect as function of (ω₁₂, k_τ)
-2. **λ₂ temporal evolution**: λ₂ over time for Thomas3D vs Spinor8D
-3. **Rotational tension map**: spatial map with vortex centers overlaid
-4. **Observability panel**: composite figure showing all 3 channels + focus_score
+1. Commutator defect heatmap over `(omega_12, k_tau)`
+2. Slice spectral panel: `lambda_2`, `C_spec`, `H_spec`
+3. Rotational tension map with activity mask overlay
+4. Composite observability panel: defect + spectrum + tension + `chi`
 
 ---
 
-## New pieces from review (2026-03-24)
+## Tests and Artefacts
 
-### Claim 6 (candidate): χ trigger as formalized handoff criterion
+### Claim tests
 
-**Statement**: Define a dimensionless, regular, monotonic validity functional:
+- `tests/paper_claims/test_p03_claims.py`
 
-    χ(x,t) = w₁·(η_crit/η) + w₂·Kn_loc + w₃·|ω|/ω_ref + w₄·B(t)
+Current tests already cover:
 
-where B(t) = ∫_{t-Δt}^{t} ||ω(·,s)||_{L∞} ds (windowed BKM sentinel).
+- commutator defect activation / collapse;
+- positivity and coherence behavior of `lambda_2`;
+- zero tension for uniform bivector fields;
+- `gamma_focus_score` and grade-entropy sanity;
+- non-increase of defect under the stabilizer.
 
-Properties:
-- χ ∈ C⁰(Ψ), ideally C¹ (no jumps in handoff)
-- ∂_Ψ χ · δΨ ≥ 0 in critical regime (monotonicity = interpretability)
-- All terms dimensionless
+### Runtime artefacts already available
 
-When χ > χ*, dynamics transfer from fast clock t to structural clock τ.
+- `03_commutator_sweep.json`
+- `05_regime_separability.json`
 
-**Paper-ready statement**: "We do not claim to predict finite-time singularities.
-We define an operational breakdown criterion for the continuum closure. When
-exceeded, dynamics are transferred to the structural clock τ."
-
-**Test needed**:
-- χ increases when tension/enstrophy increases
-- χ = 0 for uniform fields
-- Handoff α = σ(χ) is smooth (C¹ in Ψ)
-
-### Spectral coherence (new metric)
-
-    C_spec = Σ_k λ_k² / (Σ_k |λ_k|)²
-
-Measures spectral dispersion. Intermediate between gap (local) and torsion (global).
-
-### Spectral entropy (explicit)
-
-    H_spec = -Σ_k p_k log p_k,   p_k = |λ_k| / Σ_j |λ_j|
-
-Connects with d_eff, τ, and χ. Already implicit in code, needs to be explicit.
-
-### Remark: Σ_par = Ψ_par·Ψ̃_par
-
-Observable of the even sector (scalar + bivector). Gives scalar magnitude +
-pseudoscalar chirality. Only valid for even subalgebra — does NOT work for
-general multivectors (Gemini overclaims this).
-
-### Future: Spectral torsion T(D)
-
-Refined invariant for nonminimal Hodge–Dirac operators (arXiv 2025).
-Candidate for appendix or future extension.
+These stay as evidence artefacts, not as the paper's mathematical backbone.
 
 ---
 
-## Overnight data available (2026-03-23)
+## Editorial Rules
 
-- `03_commutator_sweep.json` — 126 configurations (42 × 3 seeds)
-- `05_regime_separability.json` — Cohen's d: focus=15, entropy=123, tension=50, d_eff=415
+- Do say: **observability**, **spectral coherence**, **activity localization**,
+  **admissibility trigger**.
+- Do not say: **exact spectral torsion**, **exact q-Dirac runtime**,
+  **generalized slice-monogenic implementation**, **finite-time singularity
+  prediction**.
+- If closure/handoff language appears, route it to `P06`.
 
----
-
-## What's missing in the codebase
-
-1. **tcl_offline.py** (persistent homology β₀, β₁, β₂) — referenced in plans but not yet verified as a standalone claim
-2. **Spectral monitor** — appears to be a convenience wrapper, not new math
-3. **Pinning metrics** — unclear if independently testable
-4. χ trigger not yet implemented — needs new module or extension of existing focus_score
-5. C_spec and H_spec not yet computed — straightforward from existing eigenvalue computation
-
----
-
-## Test file
-
-`tests/paper_claims/test_p03_claims.py` (in ods-papers repo)

@@ -1,0 +1,480 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{remark}{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\T}{\mathbb{T}}
+\newcommand{\UM}{\mathcal{U}_M}
+\newcommand{\HH}{\mathcal{H}}
+
+\title{\textbf{Pre-Algebraic Foundations for the CT Framework:\\
+Smoothly Undulating Numbers, Complexity Flow,\\
+and Algebraic Emergence}\\[6pt]
+\large ODS Unified --- Paper P00}
+
+\author{Rub\'en Jord\'a Aracil\\
+  \small Independent Researcher\\
+  \small \href{https://github.com/rjordaaracil/ods-unified-v2}{github.com/rjordaaracil/ods-unified-v2}\\[4pt]
+  \small Series:
+  P00 (this paper)
+  \,/\, \href{https://doi.org/10.5281/zenodo.18995428}{P01}
+  \,/\, \href{https://doi.org/10.5281/zenodo.15078277}{P02}
+  \,/\, \href{https://doi.org/10.5281/zenodo.19202918}{P03}
+}
+\date{March 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We develop a pre-algebraic foundation for the Clifford--Thomas (CT)
+computational framework in which no algebraic structure is assumed
+\emph{a priori}. The primitive objects are bounded oscillating series
+(smoothly undulating numbers). We introduce a complexity flow
+$\partial_\lambda u = G_\lambda[u]$ that preserves global bounds,
+admits local complexity increase, and defines limit attractors.
+We then define reading modes as integral operators and prove that,
+when the continuum of readings collapses to finitely many rigid classes,
+the limiting operators satisfy the Clifford anticommutation relations
+$\gamma_\mu\gamma_\nu + \gamma_\nu\gamma_\mu = 2g_{\mu\nu}\,\mathrm{Id}$.
+Thus Clifford algebra emerges as a boundary state of a purely analytic
+theory, rather than being postulated. All definitions are supported by
+19 unit tests in the companion code.
+\end{abstract}
+
+% ================================================================
+\section{Introduction}
+
+The CT runtime~\cite{zenodo_p01,zenodo_p02,zenodo_p03} currently operates
+on fields valued in the Clifford algebra $\mathrm{Cl}(3,0)$, an 8-dimensional
+graded algebra with generators satisfying
+$\gamma_\mu\gamma_\nu + \gamma_\nu\gamma_\mu = 2\delta_{\mu\nu}$.
+This algebraic structure is taken as axiomatic in P01--P03.
+
+The present paper asks: \emph{can the Clifford relations be derived
+rather than assumed?}
+
+We answer affirmatively by constructing a purely analytic framework
+in which:
+\begin{enumerate}
+\item The only primitive objects are bounded oscillating series
+      (no vectors, no matrices, no fixed dimension).
+\item A complexity flow generates richness without breaking bounds.
+\item Reading modes extract finite observations from the continuum.
+\item When readings stabilize at discrete classes, Clifford structure emerges.
+\end{enumerate}
+
+No algebra is used until it appears as a consequence.
+
+% ================================================================
+\section{Smoothly Undulating Numbers}
+
+Let $I = \T$ be a compact reading parameter. Fix a Schauder basis
+$(\phi_n)_{n\ge0} \subset C^1(I)$. Define
+\[
+\UM := \left\{ u = \sum_{n\ge0} c_n \phi_n \in C^1(I) :
+  \|u\|_\infty \le M \right\}.
+\]
+
+\begin{definition}[Analytic oscillator]
+\label{def:oscillator}
+A function $\omega \in C^2(\R)$ is an \emph{analytic oscillator} if:
+$\sup|\omega| = 1$, $\inf\omega = -1$,
+$\omega(\xi + P) = \omega(\xi)$ for some $P > 0$,
+$\int_0^P \omega(\xi)\,d\xi = 0$,
+and all critical points of $\omega$ are isolated.
+No trigonometry is required.
+\end{definition}
+
+\begin{definition}[Smoothly undulating number]
+\label{def:sun}
+An element $u \in \UM$ is a \emph{smoothly undulating number} (SUN)
+if there exists a factorization
+\[
+u(s) = \alpha(s)\,\omega(\varphi(s)),
+\]
+with $\alpha \in W^{1,\infty}(I)$, $0 \le \alpha \le M$;
+$\varphi \in C^1(I)$, $\varphi'(s) \ge \kappa > 0$;
+$\omega$ an analytic oscillator; and the slowness condition
+\begin{equation}\label{eq:A1}
+|\alpha'(s)| \le \vartheta\,(1 + \alpha(s))\,\varphi'(s),
+\qquad 0 \le \vartheta < 1.  \tag{A1}
+\end{equation}
+The triple $(\alpha, \omega, \varphi)$ is an \emph{admissible factorization},
+not the object itself.
+\end{definition}
+
+\begin{definition}[Equivalence of factorizations]
+\label{def:equiv}
+Two factorizations $(\alpha,\omega,\varphi)$ and
+$(\tilde\alpha,\tilde\omega,\tilde\varphi)$ represent the same SUN if
+there exists $h \in C^1(\R)$, strictly increasing, with $h' > 0$,
+such that $\tilde\varphi = h \circ \varphi$,
+$\tilde\omega = \omega \circ h^{-1}$, $\tilde\alpha = \alpha$.
+\end{definition}
+
+\begin{proposition}[Phase reparametrization invariance]
+\label{prop:invariance}
+The relation of Definition~\ref{def:equiv} is an equivalence relation
+and leaves $u$ invariant.
+\end{proposition}
+\begin{proof}
+$\tilde\alpha(s)\,\tilde\omega(\tilde\varphi(s))
+= \alpha(s)\,\omega(h^{-1}(h(\varphi(s))))
+= \alpha(s)\,\omega(\varphi(s))
+= u(s)$.
+Reflexivity, symmetry, and transitivity are immediate. \qed
+\end{proof}
+
+\begin{proposition}[Series compatibility]
+\label{prop:series}
+Every smoothly undulating number belongs to the permitted ontological
+class: it is a bounded series.
+\end{proposition}
+\begin{proof}
+By definition $u \in C^1(I) \subset C(I)$. Since $(\phi_n)$ is a
+Schauder basis of $C(I)$, there exists a unique expansion
+$u = \sum_{n\ge0} c_n \phi_n$ with uniform convergence.
+The bound $\|u\|_\infty \le M$ holds by construction. \qed
+\end{proof}
+
+\begin{proposition}[Sequences as readings]
+\label{prop:sequences}
+For any $(b_n)_{n\ge0} \in \ell^\infty$, there exist
+$u \in \UM$ with $M = \sup_n|b_n|$ and smooth readers $(L_n)$
+such that $L_n[u] = b_n$ for all~$n$.
+\end{proposition}
+\begin{proof}
+Take disjoint intervals $J_n \subset I$ and smooth functions
+$\psi_n, \theta_n$ supported in $J_n$ with
+$\int_I \psi_n\theta_n = 1$ and $\int_I \psi_m\theta_n = 0$ for $m \ne n$.
+Set $u = \sum_n b_n\psi_n$ and $L_n[v] = \int_I v\,\theta_n$.
+Then $\|u\|_\infty \le M$ by disjoint support, and $L_n[u] = b_n$. \qed
+\end{proof}
+
+% ================================================================
+\section{Complexity Flow}
+
+Fix two smoothing operators (heat semigroup):
+\[
+S_c := e^{\varepsilon_c\partial_{ss}}, \quad
+S_f := e^{\varepsilon_f\partial_{ss}}, \quad
+0 < \varepsilon_f < \varepsilon_c.
+\]
+Define the \emph{defect} $A[u] := u - S_c u$,
+the \emph{fine return} $\mathcal{R}[u] := S_f u - S_c u$,
+the \emph{complexity density} $Q[u] := |A[u]|$,
+and the \emph{production proxy} $\Pi[u] := |\mathcal{R}[u]|$.
+
+\begin{definition}[Dynamic permeability]
+\label{def:perm}
+For bounded continuous $\alpha,\beta,\mu: [0,\infty) \to (0,\infty)$
+and $\tau > 0$:
+\begin{equation}\label{eq:B1}
+p_\lambda[u] := \beta(\lambda)\,
+\frac{\Pi[u]}{\Pi[u] + \mu(\lambda)\,Q[u] + \tau}. \tag{B1}
+\end{equation}
+Then $0 \le p_\lambda[u] \le \beta(\lambda)$, and the local
+rupture threshold is $\Pi[u] > \mu(\lambda)\,Q[u] + \tau$.
+\end{definition}
+
+\begin{definition}[Complexity flow]
+\label{def:flow}
+\begin{equation}\label{eq:flow}
+\partial_\lambda u = G_\lambda[u] :=
+-\alpha(\lambda)\,A[u]
++ p_\lambda[u]\left(1 - \frac{u^2}{M^2}\right)\mathcal{R}[u]. \tag{F}
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Global existence and boundedness]
+\label{prop:bounded}
+For any $u_0 \in \UM$, the flow~\eqref{eq:flow} has a unique global
+solution in $C^1([0,\infty); C(I))$ satisfying
+$\|u(\lambda)\|_\infty \le M$ for all $\lambda \ge 0$.
+\end{proposition}
+\begin{proof}
+$G_\lambda$ is locally Lipschitz in $C(I)$ because the denominator
+in~\eqref{eq:B1} is bounded below by $\tau > 0$.
+Existence follows from Picard--Lindel\"of in Banach space.
+
+For the bound: if $u(\lambda_*,s_*) = M$ at a first contact point,
+then $A[u] = u - S_c u \ge 0$ (since $S_c$ is positive and sub-averaging),
+so the first term in~\eqref{eq:flow} is $\le 0$.
+The second term vanishes because $1 - u^2/M^2 = 0$.
+Thus $\partial_\lambda u \le 0$ at the boundary.
+The argument for $-M$ is symmetric.
+Therefore $[-M, M]$ is an invariant tube, preventing blow-up. \qed
+\end{proof}
+
+\begin{proposition}[Complexity production identity]
+\label{prop:production}
+Define the complexity energy $\mathcal{E}[u] := \frac{1}{2}\int_I u\,\mathcal{R}[u]\,ds$.
+Along the flow~\eqref{eq:flow}:
+\begin{equation}\label{eq:B3}
+\frac{d}{d\lambda}\mathcal{E}[u(\lambda)]
+= -\alpha(\lambda)\int_I A[u]\,\mathcal{R}[u]\,ds
++ \int_I p_\lambda[u]\left(1-\frac{u^2}{M^2}\right)\Pi[u]^2\,ds.
+\tag{B3}
+\end{equation}
+Moreover, $\int_I A[u]\,\mathcal{R}[u]\,ds \ge 0$.
+\end{proposition}
+\begin{proof}
+Since $\mathcal{R}$ is self-adjoint,
+$\frac{d}{d\lambda}\mathcal{E} = \int_I \partial_\lambda u\,\mathcal{R}[u]\,ds$.
+Substituting~\eqref{eq:flow} and using $|\mathcal{R}[u]| = \Pi[u]$
+yields~\eqref{eq:B3}.
+For the positivity: $A = I - S_c$ and $\mathcal{R} = S_f - S_c$ are
+increasing functions of the same heat operator, hence commute and
+are both positive, giving $\int A\,\mathcal{R} \ge 0$. \qed
+\end{proof}
+
+\begin{corollary}[Rupture and complexity increase]
+\label{cor:rupture}
+Define the rupture set
+$\Omega_{\mathrm{rup}}(\lambda) := \{s : \Pi[u] > \mu(\lambda)Q[u] + \tau\}$.
+On $\Omega_{\mathrm{rup}}$, the permeability satisfies
+$p_\lambda[u] > \beta(\lambda)/2$.
+If $|u| < M$ on a positive-measure subset of $\Omega_{\mathrm{rup}}$
+and local production exceeds dissipation, then
+$\frac{d}{d\lambda}\mathcal{E}[u(\lambda)] > 0$.
+\end{corollary}
+
+\begin{definition}[Limit attractor]
+\label{def:attractor}
+Assuming $\alpha(\lambda) \to \alpha_\infty$,
+$\beta(\lambda) \to \beta_\infty$,
+$\mu(\lambda) \to \mu_\infty$ as $\lambda \to \infty$,
+a \emph{limit attractor} is a stable solution $u_* \in \UM$ of
+the stationary equation $G_\infty[u_*] = 0$.
+\end{definition}
+
+\begin{conjecture}[Generic convergence]
+\label{conj:convergence}
+For an open set of smoothly undulating initial data and regular
+schedules $(\alpha,\beta,\mu)$, the flow converges to a non-empty
+family of limit attractors with finite rigid rank.
+\end{conjecture}
+
+% ================================================================
+\section{Algebraic Emergence}
+
+\begin{definition}[Reading modes]
+\label{def:reading}
+For a compact parameter set $\Xi$ with $\xi = (\eta,\sigma,\delta)$
+and resolution $\varepsilon > 0$, a \emph{reading mode} is an
+integral operator
+\[
+(L_\xi^\varepsilon u)(s) = \int_I K_\xi^\varepsilon(s,r)\,u(r)\,dr,
+\]
+with smooth kernel $K_\xi^\varepsilon$ satisfying uniform boundedness.
+These are \emph{not} ontological layers; they are readers with focus~$\eta$,
+scale~$\sigma$, and penumbra~$\delta$.
+\end{definition}
+
+\begin{definition}[Quantization radius]
+\label{def:quant}
+\[
+\Delta_N(\varepsilon; u) := \inf_{v_1,\ldots,v_N \in C(I)}
+\sup_{\xi \in \Xi} \min_{1\le j\le N}
+\|L_\xi^\varepsilon u - v_j\|_\infty.
+\]
+\end{definition}
+
+\begin{definition}[Rigid rank]
+\label{def:rigidrank}
+$N_{\mathrm{rig}}(u) := \min\{N \ge 1 :
+\lim_{\varepsilon\to0}\Delta_N(\varepsilon;u) = 0\}$,
+if it exists. A finite rigid rank means the continuum of readers
+collapses to $N$ discrete classes.
+\end{definition}
+
+\begin{definition}[Symmetrized closure defect]
+\label{def:defect}
+For class representatives $L_1^\varepsilon,\ldots,L_N^\varepsilon$
+of the $N$ rigid classes, define
+\[
+D_{\mu\nu}^\varepsilon[u;c] := \sup_{\substack{v \in \HH_\varepsilon[u]\\
+\|v\|_\infty \le 1}}
+\left\| L_\mu^\varepsilon L_\nu^\varepsilon v
++ L_\nu^\varepsilon L_\mu^\varepsilon v - 2c\,v \right\|_\infty,
+\]
+where $\HH_\varepsilon[u]$ is the family generated by iterated reading.
+Let $g_{\mu\nu}^\varepsilon[u]$ be any minimizer in~$c$, and
+$D_{\mu\nu}^\varepsilon[u] := D_{\mu\nu}^\varepsilon[u; g_{\mu\nu}^\varepsilon]$.
+\end{definition}
+
+\begin{definition}[Rigidity functional]
+\label{def:rigidity}
+\[
+\mathbf{Rig}_N(\varepsilon; u) :=
+\Delta_N(\varepsilon; u) + \max_{1\le\mu,\nu\le N}
+D_{\mu\nu}^\varepsilon[u].
+\]
+First term: discretization. Second term: algebraic closure.
+\end{definition}
+
+\begin{definition}[Algebraic emergence of rank $N$]
+\label{def:emergence}
+$u$ exhibits \emph{algebraic emergence of rank $N$} if
+$N_{\mathrm{rig}}(u) = N$ and
+$\lim_{\varepsilon\to0}\mathbf{Rig}_N(\varepsilon;u) = 0$.
+\end{definition}
+
+\begin{theorem}[Recovery of Clifford relations]
+\label{thm:clifford}
+Let $u_*$ be a limit attractor of the flow. Suppose:
+\begin{enumerate}
+\item $N_{\mathrm{rig}}(u_*) = N < \infty$.
+\item $\mathbf{Rig}_N(\varepsilon; u_*) \to 0$.
+\item For each $\mu$, the strong limit
+$\gamma_\mu v := \lim_{\varepsilon\to0} L_\mu^\varepsilon v$
+exists for all $v \in \HH[u_*]$.
+\item The limit $g_{\mu\nu} := \lim_{\varepsilon\to0}
+g_{\mu\nu}^\varepsilon[u_*]$ exists.
+\end{enumerate}
+Then
+\begin{equation}\label{eq:clifford}
+\gamma_\mu\gamma_\nu + \gamma_\nu\gamma_\mu
+= 2g_{\mu\nu}\,\mathrm{Id}
+\quad \text{on } \HH[u_*].
+\end{equation}
+\end{theorem}
+\begin{proof}
+By Definition~\ref{def:defect},
+$\|L_\mu^\varepsilon L_\nu^\varepsilon v
++ L_\nu^\varepsilon L_\mu^\varepsilon v
+- 2g_{\mu\nu}^\varepsilon v\|_\infty \to 0$
+for all $v \in \HH_\varepsilon[u_*]$ with $\|v\|_\infty \le 1$.
+Passing to the strong limits in the operators and the scalar limit
+in $g_{\mu\nu}^\varepsilon$ yields~\eqref{eq:clifford}. \qed
+\end{proof}
+
+\begin{corollary}[Squares $\pm 1$]
+\label{cor:squares}
+If $g_{\mu\mu} \ne 0$, the renormalized reader
+$\widetilde\gamma_\mu := |g_{\mu\mu}|^{-1/2}\gamma_\mu$ satisfies
+$\widetilde\gamma_\mu^2 = \mathrm{sgn}(g_{\mu\mu})\,\mathrm{Id}$.
+If $g_{\mu\nu} = 0$ for $\mu \ne \nu$, then
+$\widetilde\gamma_\mu\widetilde\gamma_\nu
++ \widetilde\gamma_\nu\widetilde\gamma_\mu
+= 2\eta_{\mu\nu}\,\mathrm{Id}$
+with $\eta = \mathrm{diag}(\pm1,\ldots,\pm1)$.
+\end{corollary}
+
+\begin{corollary}[$\mathrm{Cl}(3,0)$ sub-closure]
+\label{cor:cl30}
+If $N_{\mathrm{rig}}(u_*) = 8$ and there exist three classes
+$\{\mu_1,\mu_2,\mu_3\}$ with $g_{\mu_i\mu_j} = \delta_{ij}$,
+then an emergent sub-closure of type $\mathrm{Cl}(3,0)$ exists
+within the attractor's eight reading modes.
+This matches the current ODS runtime without assuming eight
+coordinates \emph{a priori}.
+\end{corollary}
+
+% ================================================================
+\section{Experiments}
+
+All definitions and propositions are accompanied by computational
+tests in the companion code \texttt{\_claude\_calculo/}.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{lcc}
+\hline
+\textbf{Test group} & \textbf{Tests} & \textbf{Status} \\
+\hline
+Def 1 (oscillator)     & 3  & 3/3  \\
+Def 2 (SUN)            & 2  & 2/2  \\
+Prop 1 (invariance)    & 1  & 1/1  \\
+Prop 3 (sequences)     & 1  & 1/1  \\
+Prop 4 (boundedness)   & 3  & 3/3  \\
+Prop 5 (energy)        & 2  & 2/2  \\
+Cor 1 (rupture)        & 2  & 2/2  \\
+Emergence (Defs 9--14) & 5  & 5/5  \\
+\hline
+\textbf{Total}         & \textbf{19} & \textbf{19/19} \\
+\hline
+\end{tabular}
+\caption{Test coverage for the pre-algebraic foundations.}
+\end{table}
+
+% ================================================================
+\section{Discussion}
+
+\subsection{What this paper does}
+\begin{itemize}
+\item Provides a purely analytic foundation for CT.
+\item Derives Clifford structure as a consequence, not an axiom.
+\item Defines exact criteria for the continuum-to-discrete transition.
+\item Preserves global bounds throughout the complexity flow.
+\end{itemize}
+
+\subsection{What this paper does not claim}
+\begin{itemize}
+\item Generic convergence of the flow to rigid attractors
+      (Conjecture~\ref{conj:convergence}, not proven).
+\item That the emergent metric $g_{\mu\nu}$ necessarily matches
+      any physical metric.
+\item That this framework resolves any open problem in PDE theory.
+\item That the specific reading mode kernels used in the experiments
+      are the ``correct'' or unique choice.
+\end{itemize}
+
+% ================================================================
+\section{Conclusion}
+
+We have shown that Clifford algebra can emerge from a purely analytic
+framework of bounded oscillating series, without postulating any
+algebraic structure. The key mechanism is the collapse of a continuum
+of reading modes to finitely many rigid classes under resolution
+refinement. When this rigidity condition is met (Definition~\ref{def:emergence}),
+the limiting operators satisfy the Clifford anticommutation
+relations (Theorem~\ref{thm:clifford}).
+
+This provides a foundational justification for the CT runtime
+series P01--P06: the $\mathrm{Cl}(3,0)$ structure used there
+is not arbitrary but arises as a natural boundary state of the
+complexity flow.
+
+The single open problem is Conjecture~\ref{conj:convergence}:
+proving generic convergence of the flow to finite-rank rigid
+attractors.
+
+\begin{thebibliography}{9}
+\bibitem{zenodo_p01}
+R.~Jord\'a Aracil,
+\emph{CT Runtime: Dual-Clock Clifford Field Integrator},
+ODS Unified P01, 2026.
+\url{https://doi.org/10.5281/zenodo.18995428}
+
+\bibitem{zenodo_p02}
+R.~Jord\'a Aracil,
+\emph{Regimes, Soliton Structure, and Inter-Grade Modulation},
+ODS Unified P02, 2026.
+\url{https://doi.org/10.5281/zenodo.15078277}
+
+\bibitem{zenodo_p03}
+R.~Jord\'a Aracil,
+\emph{Observability and Stress Monitoring: The $\chi$ Trigger Framework},
+ODS Unified P03, 2026.
+\url{https://doi.org/10.5281/zenodo.19202918}
+
+\bibitem{ods_code}
+R.~Jord\'a Aracil,
+\emph{ODS Unified v2 --- source code},
+\url{https://github.com/rjordaaracil/ods-unified-v2}
+\end{thebibliography}
+
+\end{document}

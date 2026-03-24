@@ -1,6 +1,8 @@
 # P04 — Memory Coupling, Tau Cascade, and Virtual Population Dynamics in a Clifford--Thomas Runtime
 
-**Status**: Outline draft
+**Status**: Outline draft — core claim modules are present in runtime and claim
+tests; what still needs tightening is the paper-safe end-to-end memory tick
+evidence and a compact empirical artifact
 **Depends on**: P01 (runtime), P02 (regimes), P03 (observability)
 **Target**: Zenodo preprint
 
@@ -123,13 +125,41 @@ thermodynamically consistent relaxation for the vector-bivector sector.
 
 ---
 
-## What's missing in the codebase
+## Current repo status
 
-1. **Memory curvature κ** — mentioned in plans but not found as explicit function
-2. **Overnight consolidation** — `neuro_field/overnight.py` exists but not reviewed
-3. **End-to-end memory pipeline** — need a test that goes chunk → inject → relax → measure
-4. **Motif graph construction** — `motifs.py` defines MotifSpec but graph building not yet reviewed
-5. No benchmark data yet (unlike P02 which has summary.json)
+The old "missing in the codebase" list is now partly stale.
+
+Pieces already present:
+
+1. **Memory curvature proxy / blending**
+   - `jax_runtime.mass_proxy.build_mass_proxy(...)`
+   - `jax_runtime.mass_proxy.blend_memory_curvature(...)`
+2. **Memory injection and assignment coupling**
+   - `memory.field_adapter.inject_chunk(...)`
+   - `jax_runtime.tau_assimilation.assignment_energy(...)`
+3. **Tau cascade and virtual population**
+   - `lab.neuro_field.tau_cascade.*`
+   - `lab.neuro_field.virtual_population.*`
+4. **Integrated runtime path**
+   - `lab.neuro_field.tick_runtime.py` threads memory, tau, render-graph, and
+     spectral-contract/control bookkeeping in one runtime
+5. **Claim-level test coverage**
+   - `tests/paper_claims/test_p04_claims.py`
+
+## What still needs tightening before publication
+
+1. **Paper-safe end-to-end memory tick test**
+   - We still want one explicit chunk → inject → tau/assoc → measure test at
+     the `tick_runtime` level, not only claim-local unit checks.
+2. **Compact empirical table / artifact**
+   - Unlike P03/P05, P04 still lacks a clean summary artifact or benchmark table
+     to cite in the paper body.
+3. **Motif graph review**
+   - `build_motif_graph(...)` is present, but the graph layer is still more of a
+     dependency than a paper claim and should be reviewed before we elevate it.
+4. **Editorial cleanup**
+   - Reproduction commands, exact test references, and wording hardening still
+     need to be added before Zenodo upload.
 
 ---
 

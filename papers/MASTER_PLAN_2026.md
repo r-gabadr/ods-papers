@@ -76,6 +76,12 @@ Solo para sector par (escalar + bivector). Gemini overclaims esto para multivect
 Invariante refinado de operadores Hodge-Dirac no minimales (arXiv 2025).
 Candidato para P03 appendix o futuro.
 
+**Estado de implementación (runtime, 2026-03-23):**
+- `compute_chi(...)` y `handoff_alpha(...)` ya están en
+  `ods_unified_v2.jax_runtime.observability`
+- `spectral_coherence(...)` y `spectral_entropy(...)` ya están en
+  `ods_unified_v2.jax_runtime.tcl_spectral`
+
 ### Paper-ready claim sobre handoff t→τ
 ```
 "We define an operational breakdown criterion for the continuum closure,
@@ -129,6 +135,21 @@ NO decimos "NS3D explota". Decimos "el modelo continuo sale de su dominio de val
 
 **Decisión:** Main claim = multiscale contractive. Hutchinson = claim condicional (r+L < ~0.85).
 
+**Correcciones matemáticas a fijar en el texto final:**
+- El subconjunto Hutchinson fuerte debe ser **estrictamente contractivo**;
+  rotores puros con c = 1 se tratan como simetrías de transporte, no como
+  generadores del IFS salvo que se amorticen/proyecten.
+- El operador promediado T_ℓ da un **representante comprimido** o surrogate
+  operacional, no automáticamente un barycenter del atractor sin una medida
+  invariante explícita.
+- El espacio ambiente debe tiparse como espacio métrico completo
+  (p. ej. campos Clifford continuos con norma sup) y distinguir el subconjunto
+  admisible X_adm.
+- Hay que reportar también el **margen de contractividad**
+  m_{α,ℓ} = 1 - c_{α,ℓ}, no solo la condición c < 1.
+- Además de contraer, los generadores deben preservar admisibilidad
+  (directamente o tras Π_h / checker runtime).
+
 ### Piezas nuevas a incorporar (review GPT 2026-03-24)
 
 **Ciclo lifting-evolución-proyección (formalizar):**
@@ -155,6 +176,12 @@ O más débil: F(Ψ_{n+1}) ≤ F(Ψ_n).
 E_slice = Σ_{ℓ≠ℓ'} |Π_ℓ Ψ - T_{ℓ→ℓ'}(Π_{ℓ'} Ψ)|²  ≤  ε
 ```
 Cierra multislice + transporte + coherencia global.
+
+**Estado de implementación (runtime, 2026-03-23):**
+- `regime_alpha(...)`, `spectral_smoothing(...)` y `regime_blend(...)` ya
+  están en `ods_unified_v2.jax_runtime.multiscale`
+- `slice_consistency(...)` ya existe como proxy operativo de coherencia
+  inter-slice
 
 **Textura multiescala:**
 ```
