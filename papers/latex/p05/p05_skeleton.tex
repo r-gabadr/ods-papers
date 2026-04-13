@@ -1,0 +1,123 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{graphicx,hyperref,booktabs,geometry,xcolor}
+\geometry{margin=2.5cm}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+\newtheorem{claim}{Claim}
+\newtheorem{theorem}{Theorem}
+\newtheorem{remark}{Remark}
+
+\title{\textbf{Multiscale Contractive Extension of a Clifford--Thomas Runtime:\\Hutchinson Families and Fractal Structure}}
+\author{R. Gabad\\Independent Researcher}
+\date{April 2026 --- SKELETON v1}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We study the contractive properties of the map family
+$\Phi_{\alpha,\ell}(\Psi) = r_{\alpha,\ell} R_{\alpha,\ell} \Psi \tilde{R}_{\alpha,\ell} + \Delta_{\alpha,\ell}(\Psi)$
+in the CT runtime. Empirical evidence shows individual contractivity ($c < 1$)
+for all tested maps. Hutchinson convergence confirmed for conservative
+configurations ($r + \mathrm{Lip}(\Delta) < 0.85$). Fixed-point uniqueness
+confirmed from 20 random starts. Global uniform proof left for future work.
+\end{abstract}
+
+\section{Formal Setting}
+State space: $X = \bigoplus_{\ell} C(\Omega, \mathrm{Cl}_{3,0}^{(\ell)})$ with sup norm.
+
+\begin{theorem}[Banach -- Variant A]
+If $L_\ell = \sum |w_{\alpha,\ell}|(r_{\alpha,\ell} + L_{\alpha,\ell}) < 1$,
+then $T_\ell$ has a unique fixed point $A^*_\ell$.
+\end{theorem}
+
+\begin{theorem}[Hutchinson '81 -- Variant B]
+If every $\Phi_{\alpha,\ell}$ satisfies $c_{\alpha,\ell} < 1$, then
+$H_\ell(K) = \bigcup_\alpha \Phi_{\alpha,\ell}(K)$ has unique compact
+invariant $K^*_\ell$ in Hausdorff metric.
+\end{theorem}
+
+Contractivity margin: $m_{\alpha,\ell} := 1 - c_{\alpha,\ell}$.
+
+\section{Rotor Isometry}
+\begin{claim}[1: Pure rotor preserves norm]
+$R\Psi\tilde{R}$ with $R\tilde{R}=1$ gives contraction ratio $= 1.0$ exactly.
+Isometry, not contraction. Must be damped for Hutchinson.
+\end{claim}
+\noindent\textbf{Test}: \texttt{TestRotorIsometry} (2 tests, 50 runs).\\[4pt]
+\textbf{Ruben}: OK / MAL \rule{3cm}{0.4pt}
+
+\section{Scaled Rotor Contractivity}
+\begin{claim}[2: $r < 1$ implies strict contraction]
+$r = 0.85 \Rightarrow c < 1.0$; mean ratio $\approx r$.
+\end{claim}
+\noindent\textbf{Test}: \texttt{TestScaledRotorContractivity} (1 test).\\[4pt]
+\textbf{Ruben}: OK / MAL \rule{3cm}{0.4pt}
+
+\section{Rotor + Perturbation}
+\begin{claim}[3: Conservative $r + \delta < 1$ contracts]
+Boundary case $r + \delta \approx 1$ documented separately.
+\end{claim}
+\noindent\textbf{Test}: \texttt{TestRotorPlusDelta} (2 tests).\\[4pt]
+\textbf{Ruben}: OK / MAL \rule{3cm}{0.4pt}
+
+\section{Mixture Contractivity}
+\begin{claim}[4: Weighted mixture contractive]
+$\sum |w_\alpha|(r_\alpha + \delta_\alpha) < 1 \Rightarrow$ mixture contracts.
+\end{claim}
+\noindent\textbf{Test}: \texttt{TestMixtureContractivity} (1 test).\\[4pt]
+\textbf{Ruben}: OK / MAL \rule{3cm}{0.4pt}
+
+\section{Fixed Point Convergence}
+\begin{claim}[5: Unique fixed point from multiple starts]
+20 random starts $\times$ 80 iterations $\to$ pairwise distance $= 0.000000$.
+\end{claim}
+\noindent\textbf{Test}: \texttt{TestFixedPointConvergence} (2 tests).\\[4pt]
+\textbf{Ruben}: OK / MAL \rule{3cm}{0.4pt}
+
+\section{Overnight Evidence (2026-03-23)}
+
+\begin{table}[h]\centering
+\begin{tabular}{lccc}
+\toprule
+Map & $c_{\max}$ & Margin $m$ & Coverage \\
+\midrule
+rotor\_r090 & 0.900 & 0.100 & 100\% \\
+rotor\_delta\_085\_010 & 0.910 & 0.090 & 100\% \\
+rotor\_delta\_085\_020 & 0.970 & 0.030 & 100\% \\
+gamma\_flow & 0.9997 & 0.0003 & 100\% \\
+defect\_stab & 0.9992 & 0.0008 & 100\% \\
+laplacian & 0.48--0.82 & 0.18--0.52 & 100\% \\
+\bottomrule
+\end{tabular}
+\caption{Individual map contractivity. All $c < 1$.}
+\end{table}
+
+\begin{table}[h]\centering
+\begin{tabular}{lcccc}
+\toprule
+Config & $r$ & $\delta$ & Converges? & Final ratio \\
+\midrule
+conservative & 0.70 & 0.10 & Yes & 0.79 \\
+moderate & 0.80 & 0.15 & Yes (slow) & 0.95 \\
+aggressive & 0.85 & 0.20 & No (sat.) & $\approx$1.0 \\
+boundary & 0.90 & 0.15 & No (sat.) & $\approx$1.0 \\
+\bottomrule
+\end{tabular}
+\caption{Hutchinson convergence: conditional on $r + \mathrm{Lip}(\Delta) < 0.85$.}
+\end{table}
+
+\section{Limitations}
+\begin{itemize}
+  \item Contractivity is sampled evidence, NOT a global uniform proof.
+  \item gamma\_flow and defect\_stab marginally contractive ($m \approx 10^{-3}$).
+  \item Pure rotors ($c = 1$) excluded from strong Hutchinson unless damped.
+  \item Admissibility preservation not proven.
+  \item Fixed-point representative is NOT a barycenter without invariant measure.
+\end{itemize}
+
+\bibliographystyle{plain}
+\bibliography{../shared/references}
+\end{document}

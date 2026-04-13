@@ -1,0 +1,118 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{graphicx,hyperref,booktabs,geometry,xcolor}
+\geometry{margin=2.5cm}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+\newtheorem{claim}{Claim}
+\newtheorem{remark}{Remark}
+
+\title{\textbf{Observability, Spectral Coherence, and Admissibility Triggers\in a Clifford Runtime}}
+\author{R. Gabad\Independent Researcher}
+\date{April 2026 --- SKELETON v1}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We define an observability layer for a Clifford-valued runtime in
+\(\mathrm{Cl}(3,0)\) using independent channels measurable without full state
+reconstruction: split-clock commutator defect, slice spectral connectivity,
+rotational activity, and grade-sensitive focus scores. These feed a smooth
+admissibility trigger \(\chi\) that gates runtime control responses.
+\end{abstract}
+
+%% ====== CLAIM A ======
+\section{Split-Clock Commutator Defect}
+
+\begin{claim}[A: Commutator defect measures split-clock non-commutativity]
+\[
+  \Delta_{\mathrm{comm}}(\Psi) = \|\mathrm{Step}_\tau \circ \mathrm{Step}_t(\Psi)
+  - \mathrm{Step}_t \circ \mathrm{Step}_\tau(\Psi)\|_2 > 0
+\]
+when both clocks active; collapses to 0 when one is disabled.
+\end{claim}
+
+\noindent\textbf{Test}: \texttt{TestCommutatorDefect} (3 tests).
+\textbf{Data}: \texttt{03\_commutator\_sweep.json}, 126 configs.\[4pt]
+\textbf{Ruben}: OK / MAL \rule{3cm}{0.4pt}
+
+%% ====== CLAIM B ======
+\section{Slice Spectral Coherence}
+
+\begin{claim}[B: Spectral quantities measure coherence, not full geometry]
+Fiedler value \(\lambda_2(L)\) from Gaussian-kernel graph Laplacian.
+\[
+  C_{\mathrm{spec}} = \frac{\sum_k \lambda_k^2}{(\sum_k |\lambda_k|)^2}, \qquad
+  H_{\mathrm{spec}} = -\sum_k p_k \log p_k, \quad
+  p_k = \frac{|\lambda_k|}{\sum_j |\lambda_j|}.
+\]
+Runtime surrogates, not spectral torsion.
+\end{claim}
+
+\noindent\textbf{Test}: \texttt{TestSpectralCoherence} (3 tests).\[4pt]
+\textbf{Ruben}: OK / MAL \rule{3cm}{0.4pt}
+
+%% ====== CLAIM C ======
+\section{Rotational Tension}
+
+\begin{claim}[C: Rotational tension localizes activity hotspots]
+\[
+  R(x) = \sqrt{\Delta_{\mathrm{row}}^2 + \Delta_{\mathrm{col}}^2}, \qquad
+  \Delta = 1 - |\langle\hat{b}(x),\hat{b}(\mathrm{nb})\rangle|.
+\]
+\(R \approx 0\) for uniform fields; nonzero for random.
+Activity mask covers high-tension regions.
+\end{claim}
+
+\noindent\textbf{Test}: \texttt{TestRotationalTension} (4 tests).\[4pt]
+\textbf{Ruben}: OK / MAL \rule{3cm}{0.4pt}
+
+%% ====== CLAIM D ======
+\section{Grade Focus and Admissibility Trigger}
+
+\begin{claim}[D: \(\chi\) is an admissibility trigger, not a singularity predictor]
+\[
+  \chi = w_1 \frac{\eta_{\mathrm{crit}}}{\eta}
+       + w_2\,\mathrm{Kn}_{\mathrm{loc}}
+       + w_3 \frac{|\omega|}{\omega_{\mathrm{ref}}}
+       + w_4\,B(t)
+\]
+Smooth, dimensionless, monotonic in critical regime.
+P03 does NOT claim \(\chi\) predicts singularities.
+\end{claim}
+
+\noindent\textbf{Test}: \texttt{TestGammaFocusScore} (3), \texttt{TestDefectStabilizer} (3).\[4pt]
+\textbf{Ruben}: OK / MAL \rule{3cm}{0.4pt}
+
+%% ====== EVIDENCE ======
+\section{Evidence Summary}
+
+\begin{table}[h]\centering
+\begin{tabular}{lcc}
+\toprule
+Dataset & Configs & Key result \
+\midrule
+commutator\_sweep & 126 & \(\Delta > 0\) both active \
+regime\_separability & Thomas vs Spinor & Cohen's \(d\): 15--415 \
+\bottomrule
+\end{tabular}
+\caption{Overnight data, 2026-03-23.}
+\end{table}
+
+% TODO: figures -- commutator heatmap, spectral panel, tension map
+
+%% ====== LIMITATIONS ======
+\section{Limitations}
+
+\begin{itemize}
+  \item All observables are runtime surrogates, not exact mathematical objects.
+  \item No spectral torsion, no q-Dirac, no slice-monogenic decomposition.
+  \item Grids tested \(\leq 64\times64\). Large-scale untested.
+  \item Closure/handoff belongs to P06.
+\end{itemize}
+
+\bibliographystyle{plain}
+\bibliography{../shared/references}
+\end{document}

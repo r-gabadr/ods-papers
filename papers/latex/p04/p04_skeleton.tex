@@ -1,0 +1,81 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\usepackage{graphicx,hyperref,booktabs,geometry,xcolor}
+\geometry{margin=2.5cm}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+\newtheorem{claim}{Claim}
+\newtheorem{remark}{Remark}
+
+\title{\textbf{Memory Coupling, Tau Cascade, and Virtual Population Dynamics\\in a Clifford--Thomas Runtime}}
+\author{R. Gabad\\Independent Researcher}
+\date{April 2026 --- SKELETON v1}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The CT runtime in $\mathrm{Cl}(3,0)$ supports document-to-field memory
+coupling through spinor fingerprints, hierarchical tau cascade with
+coherence gating, and virtual population dynamics over motif replicas.
+\end{abstract}
+
+\section{Document Injection}
+\begin{claim}[1: Injection alters field dynamics]
+$\|\Psi_{\mathrm{after}} - \Psi_{\mathrm{before}}\|_2 > 10^{-4}$ after injection.
+Drive scales with strength. Different chunks produce different drives.
+\end{claim}
+\noindent\textbf{Test}: \texttt{TestDocumentInjection} (3 tests).\\[4pt]
+\textbf{Ruben}: OK / MAL \rule{3cm}{0.4pt}
+
+\section{Assignment Energy}
+\begin{claim}[2: Principled source-to-group coupling]
+$E[n,m] = \alpha|c_n - \kappa_m| + \beta\|B_n - B_m\|^2 + \chi d_m - \gamma r_n - \delta q_m$.
+Soft assignment $\mathrm{softmax}(-E/\tau)$ sums to 1 per source.
+\end{claim}
+\noindent\textbf{Test}: \texttt{TestAssignmentEnergy} (2 tests).\\[4pt]
+\textbf{Ruben}: OK / MAL \rule{3cm}{0.4pt}
+
+\section{Coherence Gating}
+\begin{claim}[3: Tau cascade gates via coherence threshold]
+Core stage always active. Associative stage gated by
+$\mathrm{vec\_coherence} \geq \theta$. Sharp transition at threshold.
+\end{claim}
+\noindent\textbf{Test}: \texttt{TestCoherenceGating} (3 tests).\\[4pt]
+\textbf{Ruben}: OK / MAL \rule{3cm}{0.4pt}
+
+\section{Virtual Population}
+\begin{claim}[4: Coherent spinor dynamics over motif replicas]
+Population size = $n_{\mathrm{motifs}} \times \mathrm{replicas} \times \mathrm{members}$.
+Phase offsets unique per member. Spinor seeds non-degenerate.
+\end{claim}
+\noindent\textbf{Test}: \texttt{TestVirtualPopulation} (2 tests).\\[4pt]
+\textbf{Ruben}: OK / MAL \rule{3cm}{0.4pt}
+
+\section{CT Relaxation in Grade-1/2 Space}
+\begin{claim}[5: Thermodynamic consistency]
+$F_{12} = \tfrac{1}{2}k_1 E_1 + \tfrac{1}{2}k_2 E_2 + \tfrac{1}{2}\lambda\|v-\beta\|^2 - T H_{12}$,
+$H_{12} = -q\log q - (1-q)\log(1-q)$, $q = E_1/(E_1+E_2)$.
+F decreases during relaxation. $c_{12} \in [-1,1]$.
+\end{claim}
+\noindent\textbf{Test}: \texttt{TestCTRelaxation} (3 tests).\\[4pt]
+\textbf{Ruben}: OK / MAL \rule{3cm}{0.4pt}
+
+\section{Known Gaps}
+\begin{itemize}
+  \item No end-to-end memory tick test.
+  \item No compact benchmark table.
+  \item Motif graph present but not claim-level.
+\end{itemize}
+
+\section{Limitations}
+\begin{itemize}
+  \item Document injection is operational, not a formal coupling theorem.
+  \item Virtual population is designed, not emergent.
+  \item Tested on small grids ($16\times16$).
+\end{itemize}
+
+\bibliographystyle{plain}
+\bibliography{../shared/references}
+\end{document}

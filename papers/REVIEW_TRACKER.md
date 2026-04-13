@@ -97,6 +97,28 @@ Abierto. Línea `lab/neuro_field` en curso. No iniciar hasta P03 tenga módulo e
 
 ---
 
+## P06 - Estado
+
+Scope documentado en:
+
+- [P06_NS_CLOSURE_AND_CONTEXT_STREAMING.md](P06_NS_CLOSURE_AND_CONTEXT_STREAMING.md)
+
+Resumen de alcance:
+
+- closure multiescala para breakdown del continuo
+- trigger sobrio via `eta`, `Kn_loc`, enstrofia, vorticidad, textura y foco
+- captura de contexto como stream de ROI/deltas, no como full-frame dump
+- alineado con slices, dLiDAR, event cameras y textura multiescala
+
+Pendiente:
+
+- [ ] tests de trigger / closure / causalidad
+- [ ] tests de ROI / pixel differencing / sparse packet efficiency
+- [ ] implementacion minima de stream de cambios
+- [ ] decidir si P06 entra antes o despues de la siguiente tanda Zenodo
+
+---
+
 ## Documentos relacionados
 
 - [MASTER_PLAN_2026.md](MASTER_PLAN_2026.md) — plan completo con ambos repos y timeline
